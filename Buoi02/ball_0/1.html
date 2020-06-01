@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  <canvas id="canvas"></canvas>
+</body>
+
+</html>
+<script>
+  var canvas = document.getElementById("canvas");
+  var c = canvas.getContext('2d');
+
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+
+  let n = 10;
+  for (var i = 0; i < n; i++) {
+    c.beginPath();
+    c.arc(randomIntFromRange(canvas.width - 50, canvas.height - 50), randomIntFromRange(canvas.width - 30, canvas.height - 30), randomIntFromRange(30, 10), 0, Math.PI * 2, false);
+    c.fillStyle = "red";
+    c.fill();
+    c.stroke();
+    c.closePath();
+  }
+</script>

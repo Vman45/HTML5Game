@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code cua thay</title>
+</head>
+
+<body>
+  <!-- <img src="‪C:\Users\hoang\Desktop\Duck.png" alt="Duck" id="duck"> -->
+
+  <canvas id="canvas"></canvas>
+  <script>
+    const canvas = document.getElementById("canvas");
+    const c = canvas.getContext('2d');
+
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+
+    addEventListener("resize", function () {
+      canvas.width = innerWidth;
+      canvas.height = innerHeight;
+    });
+
+    class Ball {
+      constructor(radius, color, x, y) {
+        this.radius = radius;
+        this.color = color;
+        this.x = x;
+        this.y = y;
+      }
+
+      draw() {
+        c.beginPath();
+        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        c.fillStyle = this.color;
+        c.fill();
+        c.stroke();
+        c.closePath();
+      }
+    }
+
+
+
+    let N = 10; // sẽ sinh ra 10 quả bóng
+    let balls = []; //mảng lưu trữ các quả bóng
+    function generateBall(N) {
+      for (let i = 0; i < N; i++) {
+        let radius = randomIntFromRange(30, 60);
+
+        balls.push(new Ball(radius, rgb(),
+          randomIntFromRange(radius, canvas.width - radius),
+          randomIntFromRange(radius, canvas.height - radius)));
+      }
+    }
+
+    generateBall(N);
+
+    function animate() {
+      requestAnimationFrame(animate);
+      c.clearRect(0, 0, canvas.width, canvas.height);
+      balls.forEach((ball) => ball.draw());
+    }
+    animate();
+
+    addEventListener("click", (event) => {
+      console.log(`${event.clientX}, ${event.clientY}`);
+      //balls.forEach((ball) => {
+
+      let n = balls.length;
+      while (n--) {
+        let ball = balls[n];
+        if (Math.pow((event.clientX - ball.x), 2) +
+          Math.pow((event.clientY - ball.y), 2) < Math.pow(ball.radius, 2)) {
+          balls.splice(n, 1);
+        }
+      }
+    });
+
+    function rgb() {
+      color = 'rgb(';
+      for (var i = 0; i < 3; i++) {
+        color += Math.floor(Math.random() * 255) + ',';
+      }
+      return color.replace(/\,$/, ')');
+    }
+
+    function randomIntFromRange(min, max) {
+      return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+  </script>
+</body>
+
+</html>

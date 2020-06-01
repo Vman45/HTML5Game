@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 01 play</title>
+</head>
+
+<body>
+    <canvas id="canvas" width="600" height="500" style="border: 1px solid"></canvas>
+</body>
+
+<script>
+    const canvas = document.getElementById("canvas")
+    const context = canvas.getContext("2d");
+    context.moveTo(0, 0);//Tạo độ điểm bắt đầu vẽ
+    context.lineWidth = 25; //độ dầy của bút
+    context.lineTo (600, 500); //Tọa đọ theo điểm
+    context.strokeStyle = 'red';
+    context.stroke();//vẽ theo câu lệnh ở trên
+
+    context.moveTo(600,0);//chạy đến vị trí 600, 0
+    // context.lineWidth = 5;
+    context.lineTo (0,500);//vẽ đến điểm tọa đọ 0, 500
+    // context.strokeStyle = 'red';
+    context.stroke();//vẽ theo câu lệnh ở trên
+
+    //context.rect (20, 20, 400, 200) -> move to tọa độ 20, 20, vẽ bang 400, 200
+
+
+</script>
+
+</html>

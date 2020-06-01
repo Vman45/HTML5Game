@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  <canvas id="canvas"></canvas>
+</body>
+
+</html>
+<script>
+  var canvas = document.getElementById("canvas");
+  var c = canvas.getContext('2d');
+
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+
+  function randomIntFromRange(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  function rgb() {
+    color = 'rgb(';
+    for (var i = 0; i < 3; i++) {
+      color += Math.floor(Math.random() * 255) + ',';
+    }
+    return color.replace(/\,$/, ')');
+  }
+
+  let n = 10;
+
+  for (var i = 0; i < n; i++) {
+    c.beginPath();
+    c.arc(randomIntFromRange(41, canvas.width - 40), randomIntFromRange(41, canvas.height - 40), randomIntFromRange(10, 40), 0, Math.PI * 2, false);
+    c.fillStyle = rgb();
+    c.fill();
+    c.stroke();
+    c.closePath();
+  }
+</script>

@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Canvas</title>
+</head>
+
+<body>
+       <canvas id="canvas" width="472" height="472" style="background-color: orange;"></canvas>
+       <script>
+              const canvas = document.getElementById("canvas");
+              const ctx = canvas.getContext("2d")
+
+              //Vẽ khung ngoài
+              ctx.beginPath();
+              ctx.moveTo(2, 2);
+              ctx.lineWidth = 4;
+              ctx.lineTo(2, 470);
+              ctx.stroke();
+              ctx.lineTo(470, 470);
+              ctx.stroke();
+              ctx.lineTo(470, 2);
+              ctx.stroke();
+              ctx.lineTo(2, 2);
+              ctx.stroke();
+              // ctx.strokeStyle = 'black';
+              // ctx.fillStyle='orange';
+              // ctx.fill();
+
+              //Vẽ khung trong
+              ctx.beginPath();//tại đây nó bắt đầu vẽ hình mới với các fill và stroke đc định dạng lại
+              ctx.strokeStyle = 'green';
+              ctx.fillStyle='pink';
+              ctx.fill();
+              ctx.moveTo(35, 35);
+              ctx.lineWidth = 2;
+              ctx.lineTo(35, 437);
+              ctx.stroke();
+              ctx.lineTo(437, 437);
+              ctx.stroke();
+              ctx.lineTo(437, 35);
+              ctx.stroke();
+              ctx.lineTo(35, 35);
+              ctx.stroke();
+
+              //Tô màu ô
+              // ctx.beginPath();
+              ctx.fillRect(36 + 50 * 0, 36 + 50 * 0, 50, 50);
+              ctx.fillRect(36 + 50 * 2, 36 + 50 * 0, 50, 50);
+              ctx.fillRect(36 + 50 * 4, 36 + 50 * 0, 50, 50);
+              ctx.fillRect(36 + 50 * 6, 36 + 50 * 0, 50, 50);
+              ctx.fillRect(36 + 50 * 1, 36 + 50 * 1, 50, 50);
+              ctx.fillRect(36 + 50 * 3, 36 + 50 * 1, 50, 50);
+              ctx.fillRect(36 + 50 * 5, 36 + 50 * 1, 50, 50);
+              ctx.fillRect(36 + 50 * 7, 36 + 50 * 1, 50, 50);
+              ctx.fillRect(36 + 50 * 0, 36 + 50 * 2, 50, 50);
+              ctx.fillRect(36 + 50 * 2, 36 + 50 * 2, 50, 50);
+              ctx.fillRect(36 + 50 * 4, 36 + 50 * 2, 50, 50);
+              ctx.fillRect(36 + 50 * 6, 36 + 50 * 2, 50, 50);
+              ctx.fillRect(36 + 50 * 1, 36 + 50 * 3, 50, 50);
+              ctx.fillRect(36 + 50 * 3, 36 + 50 * 3, 50, 50);
+              ctx.fillRect(36 + 50 * 5, 36 + 50 * 3, 50, 50);
+              ctx.fillRect(36 + 50 * 7, 36 + 50 * 3, 50, 50);
+              ctx.fillRect(36 + 50 * 0, 36 + 50 * 4, 50, 50);
+              ctx.fillRect(36 + 50 * 2, 36 + 50 * 4, 50, 50);
+              ctx.fillRect(36 + 50 * 4, 36 + 50 * 4, 50, 50);
+              ctx.fillRect(36 + 50 * 6, 36 + 50 * 4, 50, 50);
+              ctx.fillRect(36 + 50 * 1, 36 + 50 * 5, 50, 50);
+              ctx.fillRect(36 + 50 * 3, 36 + 50 * 5, 50, 50);
+              ctx.fillRect(36 + 50 * 5, 36 + 50 * 5, 50, 50);
+              ctx.fillRect(36 + 50 * 7, 36 + 50 * 5, 50, 50);
+              ctx.fillRect(36 + 50 * 0, 36 + 50 * 6, 50, 50);
+              ctx.fillRect(36 + 50 * 2, 36 + 50 * 6, 50, 50);
+              ctx.fillRect(36 + 50 * 4, 36 + 50 * 6, 50, 50);
+              ctx.fillRect(36 + 50 * 6, 36 + 50 * 6, 50, 50);
+              ctx.fillRect(36 + 50 * 1, 36 + 50 * 7, 50, 50);
+              ctx.fillRect(36 + 50 * 3, 36 + 50 * 7, 50, 50);
+              ctx.fillRect(36 + 50 * 5, 36 + 50 * 7, 50, 50);
+              ctx.fillRect(36 + 50 * 7, 36 + 50 * 7, 50, 50);
+
+              /////test vẽ màu xám
+              ctx.beginPath();//tại đây nó bắt đầu vẽ hình mới với các fill và stroke đc định dạng lại
+              ctx.strokeStyle = 'red';//cái này nếu có lệnh stroke thì nó kẻ đường màu đỏ
+              ctx.fillStyle='gray';
+              ctx.fillRect(36 + 50 * 1, 36 + 50 * 0, 50, 50);
+
+              //Vẽ quân cờ 01 tren
+              ctx.beginPath();// tai sao ko bo duoc cai nay
+              ctx.moveTo(58, 96);
+
+              ctx.bezierCurveTo(56, 86, 66, 86, 64, 96);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = 'brown';
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(72, 104, 72, 114);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(76, 114, 76, 118, 72, 118);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(78, 122, 78, 134);
+              ctx.stroke();
+
+              ctx.lineTo(44, 134);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(44, 122, 50, 118);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(46, 118, 46, 114, 50, 114);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(50, 104, 58, 96);
+              ctx.stroke();
+              ctx.fillStyle = 'brown';
+              ctx.fill();
+              ctx.closePath();
+
+              //Ve quan co 02 tren
+              // ctx.beginPath();
+              ctx.moveTo(58 + 50 * 1, 96);
+
+              ctx.bezierCurveTo(56 + 50 * 1, 86, 66 + 50 * 1, 86, 64 + 50 * 1, 96);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = 'brown';
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(72 + 50 * 1, 104, 72 + 50 * 1, 114);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(76 + 50 * 1, 114, 76 + 50 * 1, 118, 72 + 50 * 1, 118);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(78 + 50 * 1, 122, 78 + 50 * 1, 134);
+              ctx.stroke();
+
+              ctx.lineTo(44 + 50 * 1, 134);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(44 + 50 * 1, 122, 50 + 50 * 1, 118);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(46 + 50 * 1, 118, 46 + 50 * 1, 114, 50 + 50 * 1, 114);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(50 + 50 * 1, 104, 58 + 50 * 1, 96);
+              ctx.stroke();
+              ctx.fillStyle = 'brown';
+              ctx.fill();
+              // ctx.closePath();
+
+              //Ve quan co 03 tren
+              // ctx.beginPath();
+              ctx.moveTo(58 + 50 * 2, 96);
+
+              ctx.bezierCurveTo(56 + 50 * 2, 86, 66 + 50 * 2, 86, 64 + 50 * 2, 96);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = 'brown';
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(72 + 50 * 2, 104, 72 + 50 * 2, 114);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(76 + 50 * 2, 114, 76 + 50 * 2, 118, 72 + 50 * 2, 118);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(78 + 50 * 2, 122, 78 + 50 * 2, 134);
+              ctx.stroke();
+
+              ctx.lineTo(44 + 50 * 2, 134);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(44 + 50 * 2, 122, 50 + 50 * 2, 118);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(46 + 50 * 2, 118, 46 + 50 * 2, 114, 50 + 50 * 2, 114);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(50 + 50 * 2, 104, 58 + 50 * 2, 96);
+              ctx.stroke();
+              ctx.fillStyle = 'brown';
+              ctx.fill();
+              // ctx.closePath();
+
+              //Ve quan co 04 tren
+              // ctx.beginPath();
+              ctx.moveTo(58 + 50 * 3, 96);
+
+              ctx.bezierCurveTo(56 + 50 * 3, 86, 66 + 50 * 3, 86, 64 + 50 * 3, 96);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = 'brown';
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(72 + 50 * 3, 104, 72 + 50 * 3, 114);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(76 + 50 * 3, 114, 76 + 50 * 3, 118, 72 + 50 * 3, 118);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(78 + 50 * 3, 122, 78 + 50 * 3, 134);
+              ctx.stroke();
+
+              ctx.lineTo(44 + 50 * 3, 134);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(44 + 50 * 3, 122, 50 + 50 * 3, 118);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(46 + 50 * 3, 118, 46 + 50 * 3, 114, 50 + 50 * 3, 114);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(50 + 50 * 3, 104, 58 + 50 * 3, 96);
+              ctx.stroke();
+              ctx.fillStyle = 'brown';
+              ctx.fill();
+              // ctx.closePath();
+
+              //Ve quan co 05 tren
+              // ctx.beginPath();
+              ctx.moveTo(58 + 50 * 4, 96);
+
+              ctx.bezierCurveTo(56 + 50 * 4, 86, 66 + 50 * 4, 86, 64 + 50 * 4, 96);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = 'brown';
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(72 + 50 * 4, 104, 72 + 50 * 4, 114);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(76 + 50 * 4, 114, 76 + 50 * 4, 118, 72 + 50 * 4, 118);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(78 + 50 * 4, 122, 78 + 50 * 4, 134);
+              ctx.stroke();
+
+              ctx.lineTo(44 + 50 * 4, 134);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(44 + 50 * 4, 122, 50 + 50 * 4, 118);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(46 + 50 * 4, 118, 46 + 50 * 4, 114, 50 + 50 * 4, 114);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(50 + 50 * 4, 104, 58 + 50 * 4, 96);
+              ctx.stroke();
+              ctx.fillStyle = 'brown';
+              ctx.fill();
+              // ctx.closePath();
+
+              //Ve quan co 06 tren
+              // ctx.beginPath();
+              ctx.moveTo(58 + 50 * 5, 96);
+
+              ctx.bezierCurveTo(56 + 50 * 5, 86, 66 + 50 * 5, 86, 64 + 50 * 5, 96);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = 'brown';
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(72 + 50 * 5, 104, 72 + 50 * 5, 114);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(76 + 50 * 5, 114, 76 + 50 * 5, 118, 72 + 50 * 5, 118);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(78 + 50 * 5, 122, 78 + 50 * 5, 134);
+              ctx.stroke();
+
+              ctx.lineTo(44 + 50 * 5, 134);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(44 + 50 * 5, 122, 50 + 50 * 5, 118);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(46 + 50 * 5, 118, 46 + 50 * 5, 114, 50 + 50 * 5, 114);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(50 + 50 * 5, 104, 58 + 50 * 5, 96);
+              ctx.stroke();
+              ctx.fillStyle = 'brown';
+              ctx.fill();
+              // ctx.closePath();
+
+              //Ve quan co 07 tren
+              // ctx.beginPath();
+              ctx.moveTo(58 + 50 * 6, 96);
+
+              ctx.bezierCurveTo(56 + 50 * 6, 86, 66 + 50 * 6, 86, 64 + 50 * 6, 96);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = 'brown';
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(72 + 50 * 6, 104, 72 + 50 * 6, 114);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(76 + 50 * 6, 114, 76 + 50 * 6, 118, 72 + 50 * 6, 118);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(78 + 50 * 6, 122, 78 + 50 * 6, 134);
+              ctx.stroke();
+
+              ctx.lineTo(44 + 50 * 6, 134);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(44 + 50 * 6, 122, 50 + 50 * 6, 118);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(46 + 50 * 6, 118, 46 + 50 * 6, 114, 50 + 50 * 6, 114);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(50 + 50 * 6, 104, 58 + 50 * 6, 96);
+              ctx.stroke();
+              ctx.fillStyle = 'brown';
+              ctx.fill();
+              // ctx.closePath();
+
+              //Ve quan co 08 tren
+              // ctx.beginPath();
+              ctx.moveTo(58 + 50 * 7, 96);
+
+              ctx.bezierCurveTo(56 + 50 * 7, 86, 66 + 50 * 7, 86, 64 + 50 * 7, 96);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = 'brown';
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(72 + 50 * 7, 104, 72 + 50 * 7, 114);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(76 + 50 * 7, 114, 76 + 50 * 7, 118, 72 + 50 * 7, 118);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(78 + 50 * 7, 122, 78 + 50 * 7, 134);
+              ctx.stroke();
+
+              ctx.lineTo(44 + 50 * 7, 134);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(44 + 50 * 7, 122, 50 + 50 * 7, 118);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(46 + 50 * 7, 118, 46 + 50 * 7, 114, 50 + 50 * 7, 114);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(50 + 50 * 7, 104, 58 + 50 * 7, 96);
+              ctx.stroke();
+              ctx.fillStyle = 'brown';
+              ctx.fill();
+              // ctx.closePath();
+
+              //Vẽ quân cờ 01 duoi
+              // ctx.beginPath();
+              ctx.moveTo(58, 96 + 50 * 5);
+
+              ctx.bezierCurveTo(56, 86 + 50 * 5, 66, 86 + 50 * 5, 64, 96 + 50 * 5);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = 'brown';
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(72, 104 + 50 * 5, 72, 114 + 50 * 5);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(76, 114 + 50 * 5, 76, 118 + 50 * 5, 72, 118 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(78, 122 + 50 * 5, 78, 134 + 50 * 5);
+              ctx.stroke();
+
+              ctx.lineTo(44, 134 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(44, 122 + 50 * 5, 50, 118 + 50 * 5);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(46, 118 + 50 * 5, 46, 114 + 50 * 5, 50, 114 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(50, 104 + 50 * 5, 58, 96 + 50 * 5);
+              ctx.stroke();
+              ctx.fillStyle = 'brown';
+              ctx.fill();
+              // ctx.closePath();
+
+              //Ve quan co 02 duoi
+              // ctx.beginPath();
+              ctx.moveTo(58 + 50 * 1, 96 + 50 * 5);
+
+              ctx.bezierCurveTo(56 + 50 * 1, 86 + 50 * 5, 66 + 50 * 1, 86 + 50 * 5, 64 + 50 * 1, 96 + 50 * 5);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = 'brown';
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(72 + 50 * 1, 104 + 50 * 5, 72 + 50 * 1, 114 + 50 * 5);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(76 + 50 * 1, 114 + 50 * 5, 76 + 50 * 1, 118 + 50 * 5, 72 + 50 * 1, 118 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(78 + 50 * 1, 122 + 50 * 5, 78 + 50 * 1, 134 + 50 * 5);
+              ctx.stroke();
+
+              ctx.lineTo(44 + 50 * 1, 134 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(44 + 50 * 1, 122 + 50 * 5, 50 + 50 * 1, 118 + 50 * 5);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(46 + 50 * 1, 118 + 50 * 5, 46 + 50 * 1, 114 + 50 * 5, 50 + 50 * 1, 114 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(50 + 50 * 1, 104 + 50 * 5, 58 + 50 * 1, 96 + 50 * 5);
+              ctx.stroke();
+              ctx.fillStyle = 'brown';
+              ctx.fill();
+              // ctx.closePath();
+
+              //Ve quan co 03 duoi
+              // ctx.beginPath();
+              ctx.moveTo(58 + 50 * 2, 96 + 50 * 5);
+
+              ctx.bezierCurveTo(56 + 50 * 2, 86 + 50 * 5, 66 + 50 * 2, 86 + 50 * 5, 64 + 50 * 2, 96 + 50 * 5);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = 'brown';
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(72 + 50 * 2, 104 + 50 * 5, 72 + 50 * 2, 114 + 50 * 5);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(76 + 50 * 2, 114 + 50 * 5, 76 + 50 * 2, 118 + 50 * 5, 72 + 50 * 2, 118 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(78 + 50 * 2, 122 + 50 * 5, 78 + 50 * 2, 134 + 50 * 5);
+              ctx.stroke();
+
+              ctx.lineTo(44 + 50 * 2, 134 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(44 + 50 * 2, 122 + 50 * 5, 50 + 50 * 2, 118 + 50 * 5);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(46 + 50 * 2, 118 + 50 * 5, 46 + 50 * 2, 114 + 50 * 5, 50 + 50 * 2, 114 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(50 + 50 * 2, 104 + 50 * 5, 58 + 50 * 2, 96 + 50 * 5);
+              ctx.stroke();
+              ctx.fillStyle = 'brown';
+              ctx.fill();
+              // ctx.closePath();
+
+              //Ve quan co 04 duoi
+              // ctx.beginPath();
+              ctx.moveTo(58 + 50 * 3, 96 + 50 * 5);
+
+              ctx.bezierCurveTo(56 + 50 * 3, 86 + 50 * 5, 66 + 50 * 3, 86 + 50 * 5, 64 + 50 * 3, 96 + 50 * 5);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = 'brown';
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(72 + 50 * 3, 104 + 50 * 5, 72 + 50 * 3, 114 + 50 * 5);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(76 + 50 * 3, 114 + 50 * 5, 76 + 50 * 3, 118 + 50 * 5, 72 + 50 * 3, 118 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(78 + 50 * 3, 122 + 50 * 5, 78 + 50 * 3, 134 + 50 * 5);
+              ctx.stroke();
+
+              ctx.lineTo(44 + 50 * 3, 134 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(44 + 50 * 3, 122 + 50 * 5, 50 + 50 * 3, 118 + 50 * 5);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(46 + 50 * 3, 118 + 50 * 5, 46 + 50 * 3, 114 + 50 * 5, 50 + 50 * 3, 114 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(50 + 50 * 3, 104 + 50 * 5, 58 + 50 * 3, 96 + 50 * 5);
+              ctx.stroke();
+              ctx.fillStyle = 'brown';
+              ctx.fill();
+              // ctx.closePath();
+
+              //Ve quan co 05 duoi
+              // ctx.beginPath();
+              ctx.moveTo(58 + 50 * 4, 96 + 50 * 5);
+
+              ctx.bezierCurveTo(56 + 50 * 4, 86 + 50 * 5, 66 + 50 * 4, 86 + 50 * 5, 64 + 50 * 4, 96 + 50 * 5);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = 'brown';
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(72 + 50 * 4, 104 + 50 * 5, 72 + 50 * 4, 114 + 50 * 5);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(76 + 50 * 4, 114 + 50 * 5, 76 + 50 * 4, 118 + 50 * 5, 72 + 50 * 4, 118 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(78 + 50 * 4, 122 + 50 * 5, 78 + 50 * 4, 134 + 50 * 5);
+              ctx.stroke();
+
+              ctx.lineTo(44 + 50 * 4, 134 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(44 + 50 * 4, 122 + 50 * 5, 50 + 50 * 4, 118 + 50 * 5);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(46 + 50 * 4, 118 + 50 * 5, 46 + 50 * 4, 114 + 50 * 5, 50 + 50 * 4, 114 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(50 + 50 * 4, 104 + 50 * 5, 58 + 50 * 4, 96 + 50 * 5);
+              ctx.stroke();
+              ctx.fillStyle = 'brown';
+              ctx.fill();
+              // ctx.closePath();
+
+              //Ve quan co 06 duoi
+              // ctx.beginPath();
+              ctx.moveTo(58 + 50 * 5, 96 + 50 * 5);
+
+              ctx.bezierCurveTo(56 + 50 * 5, 86 + 50 * 5, 66 + 50 * 5, 86 + 50 * 5, 64 + 50 * 5, 96 + 50 * 5);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = 'brown';
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(72 + 50 * 5, 104 + 50 * 5, 72 + 50 * 5, 114 + 50 * 5);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(76 + 50 * 5, 114 + 50 * 5, 76 + 50 * 5, 118 + 50 * 5, 72 + 50 * 5, 118 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(78 + 50 * 5, 122 + 50 * 5, 78 + 50 * 5, 134 + 50 * 5);
+              ctx.stroke();
+
+              ctx.lineTo(44 + 50 * 5, 134 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(44 + 50 * 5, 122 + 50 * 5, 50 + 50 * 5, 118 + 50 * 5);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(46 + 50 * 5, 118 + 50 * 5, 46 + 50 * 5, 114 + 50 * 5, 50 + 50 * 5, 114 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(50 + 50 * 5, 104 + 50 * 5, 58 + 50 * 5, 96 + 50 * 5);
+              ctx.stroke();
+              ctx.fillStyle = 'brown';
+              ctx.fill();
+              // ctx.closePath();
+
+              //Ve quan co 07 duoi
+              // ctx.beginPath();
+              ctx.moveTo(58 + 50 * 6, 96 + 50 * 5);
+
+              ctx.bezierCurveTo(56 + 50 * 6, 86 + 50 * 5, 66 + 50 * 6, 86 + 50 * 5, 64 + 50 * 6, 96 + 50 * 5);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = 'brown';
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(72 + 50 * 6, 104 + 50 * 5, 72 + 50 * 6, 114 + 50 * 5);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(76 + 50 * 6, 114 + 50 * 5, 76 + 50 * 6, 118 + 50 * 5, 72 + 50 * 6, 118 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(78 + 50 * 6, 122 + 50 * 5, 78 + 50 * 6, 134 + 50 * 5);
+              ctx.stroke();
+
+              ctx.lineTo(44 + 50 * 6, 134 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(44 + 50 * 6, 122 + 50 * 5, 50 + 50 * 6, 118 + 50 * 5);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(46 + 50 * 6, 118 + 50 * 5, 46 + 50 * 6, 114 + 50 * 5, 50 + 50 * 6, 114 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(50 + 50 * 6, 104 + 50 * 5, 58 + 50 * 6, 96 + 50 * 5);
+              ctx.stroke();
+              ctx.fillStyle = 'brown';
+              ctx.fill();
+              // ctx.closePath();
+
+              //Ve quan co 08 duoi
+              // ctx.beginPath();
+              ctx.moveTo(58 + 50 * 7, 96 + 50 * 5);
+
+              ctx.bezierCurveTo(56 + 50 * 7, 86 + 50 * 5, 66 + 50 * 7, 86 + 50 * 5, 64 + 50 * 7, 96 + 50 * 5);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = 'brown';
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(72 + 50 * 7, 104 + 50 * 5, 72 + 50 * 7, 114 + 50 * 5);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(76 + 50 * 7, 114 + 50 * 5, 76 + 50 * 7, 118 + 50 * 5, 72 + 50 * 7, 118 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(78 + 50 * 7, 122 + 50 * 5, 78 + 50 * 7, 134 + 50 * 5);
+              ctx.stroke();
+
+              ctx.lineTo(44 + 50 * 7, 134 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(44 + 50 * 7, 122 + 50 * 5, 50 + 50 * 7, 118 + 50 * 5);
+              ctx.stroke();
+
+              ctx.bezierCurveTo(46 + 50 * 7, 118 + 50 * 5, 46 + 50 * 7, 114 + 50 * 5, 50 + 50 * 7, 114 + 50 * 5);
+              ctx.stroke();
+
+              ctx.quadraticCurveTo(50 + 50 * 7, 104 + 50 * 5, 58 + 50 * 7, 96 + 50 * 5);
+              ctx.stroke();
+              ctx.fillStyle = 'brown';
+              ctx.fill();
+              // ctx.closePath();
+
+       </script>
+</body>
+
+</html>

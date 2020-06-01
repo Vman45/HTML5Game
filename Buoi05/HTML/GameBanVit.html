@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Ban Vit</title>
+    <style>
+        #canvas {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <p style="position: fixed; margin-top: 650px; margin-left: 15px; font-size: large; font-weight: bold; z-index: 100;">Score:
+        <span id="score"></span>
+    </p>
+    <canvas id="canvas"></canvas>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const c = canvas.getContext('2d');
+
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+        var count = 0;
+
+        addEventListener("resize", function () {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+        });
+
+        class Ball {
+            constructor(radius, color, x, y) {
+                this.radius = radius;
+                this.color = color;
+                this.x = x;
+                this.y = y;
+            }
+
+            draw() {
+                c.beginPath();
+                c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                c.fillStyle = this.color;
+                c.fill();
+                c.stroke();
+                c.closePath();
+            }
+        }
+
+
+
+        let N = 10; // sẽ sinh ra 10 quả bóng
+        let balls = []; //mảng lưu trữ các quả bóng
+        function generateBall(N) {
+            for (let i = 0; i < N; i++) {
+                let radius = randomIntFromRange(30, 60);
+
+                balls.push(new Ball(radius, rgb(),
+                    randomIntFromRange(radius, canvas.width - radius),
+                    randomIntFromRange(radius, canvas.height - radius)));
+            }
+        }
+
+        generateBall(N);
+
+        function animate() {
+            requestAnimationFrame(animate);
+            c.clearRect(0, 0, canvas.width, canvas.height);
+            balls.forEach((ball) => ball.draw());
+        }
+        animate();
+
+        addEventListener("click", (event) => {
+            console.log(`${event.clientX}, ${event.clientY}`);
+            //balls.forEach((ball) => {
+
+            let n = balls.length;
+            while (n--) {
+                let ball = balls[n];
+                if (Math.pow((event.clientX - ball.x), 2) +
+                    Math.pow((event.clientY - ball.y), 2) < Math.pow(ball.radius, 2)) {
+                    balls.splice(n, 1);
+                    count++;
+                }
+            }
+            document.getElementById("score").textContent = count;
+        });
+
+        addEventListener('mousemove', function (event) {
+            c.clearRect(0, 0, canvas.width, canvas.height);
+            let ball = balls[n];
+            if (Math.pow((event.clientX - ball.x), 2) +
+                Math.pow((event.clientY - ball.y), 2) < Math.pow(ball.radius, 2)) {
+                let newBall = new Ball(40, 'green', event.offsetX, event.offsetY);
+                ball.draw();
+                // c.beginPath();
+                // c.arc(event.clientX, event.clientY, 10, 0, Math.PI * 2, false);
+                // c.fillStyle = "red";
+                // c.fill();
+                // // c.strokeStyle = 'red';
+                // c.stroke();
+                // c.closePath();
+            }
+        })
+
+
+        function rgb() {
+            color = 'rgb(';
+            for (var i = 0; i < 3; i++) {
+                color += Math.floor(Math.random() * 255) + ',';
+            }
+            return color.replace(/\,$/, ')');
+        }
+
+        function randomIntFromRange(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+    </script>
+</body>
+
+</html>

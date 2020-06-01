@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+</head>
+
+<body>
+    <!-- <img src="‪C:\Users\hoang\Desktop\Duck.png" alt="Duck" id="duck"> -->
+
+    <canvas id="canvas"></canvas>
+    <script>
+        // const canvas = document.getElementById("canvas");
+        // const c = canvas.getContext('2d');
+
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+
+        addEventListener("resize", function () {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+        });
+
+        function imageloader() {
+            //Getting ID's
+            imagehtml5canvas = document.getElementById('imagehtml5canvas');
+            imagecanvasarea = imagehtml5canvas.getContext("2d");
+
+            xposition = Math.random()*100;
+            yposition = Math.random()*100;
+            nImages = 20;
+
+            var CanvasImage = new Image();
+            CanvasImage.src = "../Pic/Duck.png";
+            CanvasImage.onload = function () {
+
+
+                for (var i = 0; i < nImages; i++) {
+                    imagecanvasarea.drawImage(CanvasImage, xposition, yposition, 20, 20);
+                }
+            };
+        }
+
+    </script>
+</body>
+
+</html>

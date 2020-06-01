@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test file of thay</title>
+  <style>
+    /* #canvas {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    } */
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById("canvas");
+    const c = canvas.getContext('2d');
+
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+
+
+    class Ball {
+      constructor(radius, color, x, y) {
+        this.radius = radius;
+        this.color = color;
+        this.x = x;
+        this.y = y;
+      }
+
+      draw() {
+        c.beginPath();
+        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        c.fillStyle = this.color;
+        c.fill();
+        c.closePath();
+      }
+    }
+
+    addEventListener('mousemove', (event) => {
+      c.clearRect(0, 0, canvas.width, canvas.height);
+      //console.log(`Mouse move: clientX = ${event.clientX} - clientY = ${event.clientY}`);
+      let ball = new Ball(40, 'green', event.offsetX, event.offsetY);
+      ball.draw()
+    })
+  </script>
+</body>
+
+</html>
