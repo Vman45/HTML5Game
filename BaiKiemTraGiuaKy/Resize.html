@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resize</title>
+    <style>
+        /* chi la de hien len tren tat ca */
+        #canvas {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const c = canvas.getContext('2d');
+
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+
+        function draw() {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+            c.clearRect(0, 0, canvas.width, canvas.height);
+            
+            c.beginPath();
+            c.moveTo(canvas.width * 0.1, canvas.height * 0.1);
+            c.lineTo(canvas.width * 0.9, canvas.height * 0.9);
+            c.moveTo(canvas.width * 0.9, canvas.height * 0.1);
+            c.lineTo(canvas.width * 0.1, canvas.height * 0.9);
+            c.strokeStyle = 'green';
+            c.lineWidth = "5";
+            c.stroke();
+            c.closePath;
+            
+                    c.beginPath();
+                    c.rect (canvas.width * 0.1, canvas.height * 0.1, canvas.width * 0.8, canvas.height * 0.8);
+                    c.lineWidth = "5";
+                    c.strokeStyle = 'black';
+                    c.stroke();
+                    c.closePath();
+        }
+
+        draw();
+        addEventListener("resize", () => draw());
+    </script>
+</body>
+
+</html>
