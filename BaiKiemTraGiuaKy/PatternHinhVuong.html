@@ -25,10 +25,6 @@
 
         canvas.width = innerWidth;
         canvas.height = innerHeight;
-        addEventListener("resize", function () {
-            canvas.width = innerWidth;
-            canvas.height = innerHeight;
-        });
 
         class Square {
             constructor(centerx, centery, width, color, rotate) {
@@ -83,7 +79,7 @@
         }
 
         createSquare(N);
-        // addEventListener("resize", () => draw());
+        addEventListener("resize", () => draw());
         function animate() {
             requestAnimationFrame(animate);
             c.clearRect(0, 0, canvas.width, canvas.height);
