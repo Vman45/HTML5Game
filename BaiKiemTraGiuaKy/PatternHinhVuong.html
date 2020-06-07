@@ -1,0 +1,98 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern hinh vuong</title>
+    <style>
+        #canvas {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+    </style>
+</head>
+<html>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        let canvas = document.getElementById("canvas");
+        let c = canvas.getContext('2d');
+
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+        addEventListener("resize", function () {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+        });
+
+        class Square {
+            constructor(centerx, centery, width, color, rotate) {
+                this.centerx = centerx;
+                this.centery = centery;
+                this.rect_width = width;
+                this.color = color;
+                this.rotate = rotate;
+            }
+            draw() {
+                let rect_width = 200;
+                c.fillStyle = this.color;
+
+                if (!this.rotate) {
+                    c.fillRect(this.centerx - this.rect_width / 2, this.centery - this.rect_width / 2, this.rect_width, this.rect_width);
+                } else {
+                    c.save();
+                    c.translate(this.centerx, this.centery);
+                    c.rotate(Math.PI / 4);
+                    c.fillRect(- this.rect_width / 2, - this.rect_width / 2, this.rect_width, this.rect_width);
+                    c.restore();
+                }
+            }
+        }
+
+
+
+        let centerx = canvas.width / 2;
+        let centery = canvas.height / 2;
+
+        let N = 10; //so vong lap tao ra hinh vuong
+        let squares = []; //mang chua cac hinh vuong
+
+        //cac bien dung de thay doi gia tri cua hinh vuong khi duoc ve lai sau moi vong lap
+        let mau = '#4472C4';
+        let quay = false;
+        let chieuDai = canvas.width / 3.5;
+
+        function createSquare(N) {
+            for (let i = 0; i < N; i++) {
+                squares.push(new Square(centerx, centery, chieuDai, mau, quay));
+                if (mau == '#4472C4') {
+                    mau = 'white';
+                } else {
+                    mau = '#4472C4';
+                }
+
+                quay = !quay;
+                chieuDai = chieuDai * Math.sqrt(2) / 2;
+                console.log(quay);
+            }
+        }
+
+        createSquare(N);
+        // addEventListener("resize", () => draw());
+        function animate() {
+            requestAnimationFrame(animate);
+            c.clearRect(0, 0, canvas.width, canvas.height);
+            squares.forEach((Square) => Square.draw());
+        }
+
+        animate();
+
+    </script>
+</body>
+
+</html>

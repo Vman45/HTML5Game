@@ -1,172 +1,77 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #canvas {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+  </style>
+</head>
 <html>
 
 <body>
-    <audio id="ball_hit">
-        <source src="ball.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    <canvas id="canvas"></canvas>
-</body>
-<!---
-Chuyển động quỹ đạo Parabole.
-Người dùng click chuột là bắn ra một viên đạn hình cầu
-}
--->
-<script>
-    const gravity = 0.2;
-    const friction = 0.7;
-    const canvas = document.getElementById("canvas");
-    const c = canvas.getContext('2d');
+  <canvas id="canvas"></canvas>
+  <script>
+    let canvas = document.getElementById("canvas");
+    let c = canvas.getContext('2d');
 
     canvas.width = innerWidth;
     canvas.height = innerHeight;
 
-    addEventListener("resize", function () {
-        canvas.width = innerWidth;
-        canvas.height = innerHeight;
+    addEventListener("resize", () => {
+      canvas.width = innerWidth;
+      canvas.height = innerHeight;
     });
 
-
-    class Ball {
-        constructor(radius, color, x, y, dx, dy) {//cac them so can truyen
-            this.radius = radius;
-            this.color = color;
-            this.x = x;
-            this.y = y;
-            this.dx = dx;
-            this.dy = dy;
-            this.isMoving = true;//no se van co thuoc tinh nay nhung khong can truyen vao khi khoi tao mot object moi
-            this.trajectory = [];
-            this.trajectory.push({ x: this.x, y: this.y });
-        }
-
-        draw() {
-            c.beginPath();
-            c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-            c.fillStyle = this.color;
-            c.fill();
-            c.stroke();
-            c.closePath();
-        }
-
-        /* Bổ xung logic chặn bóng không đi quá tường trái và phải
-        */
-        move() {    //Ve duong di qua bong
-            if (!this.isMoving) {
-                this.trajectory = [];
-                this.draw();
-                return;
-            }
-
-            if (this.y + this.radius + this.dy > canvas.height) { //đập đất phát tiếng và dừng lại
-                this.dx = 0;
-                this.dy = 0;
-                this.isMoving = false;
-                this.y = canvas.height - this.radius;
-                var x = document.getElementById("ball_hit");
-                x.play();
-            } else {
-                this.dy += gravity;
-            }
-            this.x += this.dx;
-            this.y += this.dy
-            this.draw();
-
-            this.trajectory.push({ x: this.x, y: this.y });
-            c.moveTo(this.trajectory[0].x, this.trajectory[0].y);
-            c.lineWidth = 2;
-            c.strokeStyle = 'black';
-            for (let i = 1; i < this.trajectory.length - 1; i++) {
-                c.lineTo(this.trajectory[i].x, this.trajectory[i].y);
-            }
-            c.stroke();
-        }
-    }
-
-    //   =================thu them hinh chu nhat===================
-    class Rect {
-      constructor(width, height, color, x, y, dx, dy) {
-        // this.radius = radius;
-        this.width = width;
-        this.height = height;
+    class Square {
+      constructor(centerx, centery, width, color, rotate) {
+        this.centerx = centerx;
+        this.centery = centery;
+        this.rect_width = width;
         this.color = color;
-        this.x = x;
-        this.y = y;
-        this.dy = dy;
-        this.dx = dx;
-
+        this.rotate = rotate
       }
-
       draw() {
-        c.beginPath();
-        c.rect(this.x, this.y, this.width , this.height);
+        let rect_width = 200;
         c.fillStyle = this.color;
-        c.fill();
-        c.closePath();
-      }
-      move() {
-        this.x += this.dx; //Chuyển động tịnh tiến đều từ trái sang phải
-        if (this.x >= canvas.width) {
-          //nếu vượt quá cạnh phải màn hình thì quay lại từ cạnh bên trái
-          this.x = 0;  // vuot qua man hinh cho chay lai tu dau chu khong chuyen dong nguoc lai
+
+        if (!this.rotate) {
+          c.fillRect(this.centerx - this.rect_width / 2, this.centery - this.rect_width / 2, this.rect_width, this.rect_width);
+        } else {
+          c.save();
+          c.translate(this.centerx, this.centery);
+          c.rotate(Math.PI / 4);
+          c.fillRect(- this.rect_width / 2, - this.rect_width / 2, this.rect_width, this.rect_width);
+          c.restore();
         }
-        this.draw();
+
       }
     }
-    // let radius = 30;
-    let rect = new Rect(50, 20, 'green', 0, canvas.height - 20, 10, 0)
 
-// ==============cho chung funtion ve vao ben duoi nen chi can 01 funtion ve==================
-    // function animateRect() {
-    //   requestAnimationFrame(animate);
-    //   c.clearRect(0, 0, canvas.width, canvas.height);
-    //   rect.move();
-    // }
-    // animateRect();
+    let centerx = canvas.width / 2;
+    let centery = canvas.height / 2;
 
-
-    //---------
-    let balls = [];  //Danh sách các quả bóng bắn ra
-
-
-    addEventListener("click", (event) => {
-        let x = 30;
-        let y = canvas.height * 0.9;
-        let ball = new Ball(20, rgb(), x, y, randomIntFromRange(5, 10), randomIntFromRange(-15, -12));
-        balls.push(ball);
-    });
+    let square0 = new Square(centerx, centery, 400, '#4472C4', false);
+    let square1 = new Square(centerx, centery, 400/1.414, 'white', true);
 
     function animate() {
-        requestAnimationFrame(animate);
-        c.clearRect(0, 0, canvas.width, canvas.height);
-        c.font = "20px Arial";
-        c.fillStyle = 'black';
-        c.textAlign = 'center';
-        c.fillText("Click để bắn bóng", canvas.width * 0.5, 20);
-
-        balls.forEach(ball => ball.move());  // Viết bằng Arrow function
-        /* Viết hàm cú pháp cổ điển
-        for (var i = 0; i < balls.length; i++) {
-          balls[i].move();
-        } 
-        */
-        rect.move();//rect move sau thi no se ve de len bi
-    }
-
-    function rgb() {
-        color = 'rgb(';
-        for (var i = 0; i < 3; i++) {
-            color += Math.floor(Math.random() * 255) + ',';
-        }
-        return color.replace(/\,$/, ')');
-    }
-
-    function randomIntFromRange(min, max) {
-        return Math.floor(Math.random() * (max - min + 1) + min);
+      requestAnimationFrame(animate);
+      c.clearRect(0, 0, canvas.width, canvas.height);
+      square0.draw();
+      square1.draw();
     }
 
     animate();
-</script>
 
+  </script>
+</body>
 
 </html>
