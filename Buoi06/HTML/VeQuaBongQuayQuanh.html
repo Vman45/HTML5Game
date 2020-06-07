@@ -1,0 +1,112 @@
+<html>
+
+<head>
+  <style>
+    #canvas {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas"></canvas>
+
+  <script>
+    let canvas = document.getElementById("canvas");
+    let c = canvas.getContext('2d');
+
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+
+
+
+    addEventListener("resize", function () {
+      canvas.width = innerWidth;
+      canvas.height = innerHeight;
+      //Trình duyệt thay đổi kích thước cập nhật lại toạ độ mặt trời
+      if (sun) { //Kiểm tra xem mặt trời có khác null không đã
+        sun.updatePosition();
+      }
+
+      if (earth) {
+        earth.updatePosition();
+      }
+    });
+
+    class Sun {
+      constructor(radius, color) {
+        this.radius = radius;
+        this.color = color;
+        this.updatePosition();
+      }
+
+      updatePosition() {
+        this.x = canvas.width * 0.5;
+        this.y = canvas.height * 0.5;
+      }
+
+
+      draw() {
+        c.beginPath();
+        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        c.fillStyle = this.color;
+        c.fill();
+        c.stroke();
+        c.closePath();
+      }
+    }
+    class Earth {
+      constructor(sun, radius, color) {
+        this.sun = sun; //Truyền mặt trời vào        
+        this.radius = radius;
+        this.color = color;
+        this.goc = 0;
+        this.toc_do_quay = 0.01;
+        this.R = 300; //R là khoảng cách giữa tâm trái đất và tâm mặt trời
+        this.updatePosition();
+      }
+
+      updatePosition() {
+        this.centerX = sun.x; //tâm quay là tâm của mặt trời
+        this.centerY = sun.y;
+      }
+
+      draw() {
+        c.beginPath();
+        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        c.fillStyle = this.color;
+        c.fill();
+        c.stroke();
+        c.closePath();
+      }
+
+      /* Bổ xung logic chặn bóng không đi quá tường trái và phải
+      */
+      move() {
+        this.x = this.centerX + this.R * Math.cos(this.goc);
+        this.y = this.centerY + this.R * Math.sin(this.goc);
+        this.goc += this.toc_do_quay;
+        this.draw();
+      }
+    }
+
+    let sun = new Sun(40, 'red');
+    let earth = new Earth(sun, 20, 'green'); //Tại sao truyền đối tượng sun vào constructor của earth để làm gì?
+
+    function animate() {
+      requestAnimationFrame(animate);
+      c.clearRect(0, 0, canvas.width, canvas.height);
+      sun.draw();
+      earth.move();
+    }
+
+    animate();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const c = canvas.getContext('2d');
+
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+
+        class Point {
+            constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            }
+        }
+
+        class Triangle {
+            constructor (pointA, pointB, pointC) {
+                this.pointA = new Point();
+                this.pointB = new Point();
+                this.pointC = new Point();
+            }
+
+            draw() {
+                c.beginPath();
+                c.moveTo(pointA.x, pointA.y);
+                c.lineTo(pointB.x, pointB.y);
+                c.lineTo(pointC.x, pointC.y);
+                c.lineTo(pointA.x, pointA.y);
+                c.stroke();
+                c.closePath();
+
+                c.beginPath();
+                c.setLineDash([3, 5]);
+                c.moveTo(pointA.x, pointA.y);
+                c.lineTo((pointB.x + pointC.x)/2 , (pointB.y + pointC.y)/2);
+                c.stroke();
+                c.closePath();
+
+                c.beginPath();
+                c.setLineDash([7, 10]);
+                c.moveTo(pointB.x, pointB.y);
+                c.lineTo((pointA.x + pointC.x)/2 , (pointA.y + pointC.y)/2);
+                c.stroke();
+                c.closePath();
+
+                c.beginPath();
+                c.setLineDash([5, 15]);
+                c.moveTo(pointC.x, pointC.y);
+                c.lineTo((pointB.x + pointA.x)/2 , (pointB.y + pointA.y)/2);
+                c.stroke();
+                c.closePath();
+            }
+        }
+
+        let pointA = new Point (canvas.width * 0.5, 50);
+        let pointB = new Point (canvas.width * 0.25, 300);
+        let pointC = new Point (canvas.width * 0.75, 300);
+        let tamGiac = new Triangle (pointA, pointB, pointC);
+
+        // c.beginPath();
+        // c.moveTo (pointA());
+        // c.lineTo (pointB());
+        // console.log(pointA);
+        c.font = "30px Arial";
+        c.fillText("A", canvas.width * 0.5 - 10, 30);
+        // c.font = "30px Arial";
+        c.fillText("B", canvas.width * 0.25 - 30, 330);
+        // c.font = "30px Arial";
+        c.fillText("C", canvas.width * 0.75 + 30, 330);
+
+        tamGiac.draw();
+    </script>
+</body>
+
+</html>
