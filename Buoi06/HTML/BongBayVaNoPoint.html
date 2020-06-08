@@ -96,7 +96,9 @@
         });
 
         addEventListener("keydown", (event) => {
-            generateBall(N);
+            if (event.keyCode == 32) {
+                generateBall(N);
+            }
         })
 
         function rgb() {
