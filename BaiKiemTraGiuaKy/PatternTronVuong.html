@@ -27,61 +27,72 @@
         canvas.height = innerHeight;
 
         class Square {
-            constructor(centerx, centery, width, color, rotate) {
+            constructor(centerx, centery, width, color, pattern) {
                 this.centerx = centerx;
                 this.centery = centery;
                 this.rect_width = width;
                 this.color = color;
-                this.rotate = rotate;
+                this.pattern = pattern;
             }
             draw() {
                 // let rect_width = 200;
                 c.fillStyle = this.color;
 
-                if (!this.rotate) {
-                    c.fillRect(this.centerx - this.rect_width / 2, this.centery - this.rect_width / 2, this.rect_width, this.rect_width);
+                if (this.pattern) {
+                    c.arc(this.centerx, this.centery, this.width, 0, Math.PI * 2, false);
                 } else {
                     c.save();
                     c.translate(this.centerx, this.centery);
-                    c.rotate(Math.PI / 4);
-                    c.fillRect(- this.rect_width / 2, - this.rect_width / 2, this.rect_width, this.rect_width);
+                    // c.rotate(Math.PI / 4);
+                    c.fillRect(this.centerx - this.width * Math.sin(Math.PI / 4), this.centery - this.width * Math.sin(Math.PI / 4), this.width, this.width);
                     c.restore();
                 }
             }
         }
 
-
+        function rgb() {
+            color = 'rgb(';
+            for (var i = 0; i < 3; i++) {
+                color += Math.floor(Math.random() * 255) + ',';
+            }
+            return color.replace(/\,$/, ')');
+        }
 
         let centerx = canvas.width / 2;
         let centery = canvas.height / 2;
 
-        let N = 10; //so vong lap tao ra hinh vuong
-        let squares = []; //mang chua cac hinh vuong
+        let N = 10; //so vong lap tao ra hinh
+        let squares = []; //mang chua cac hinh
 
         //cac bien dung de thay doi gia tri cua hinh vuong khi duoc ve lai sau moi vong lap
-        let mau = '#4472C4';
-        let quay = false;
-        let chieuDai = canvas.width / 3.5;
+        let mau = rgb();
+        let hinh = true;//neu true thi ve hinh tron, false thi ve hinh vuong
+        let width = 300;
 
         function createSquare(N) {
             for (let i = 0; i < N; i++) {
-                squares.push(new Square(centerx, centery, chieuDai, mau, quay));
-                if (mau == '#4472C4') {
-                    mau = 'white';
+                squares.push(new Square(centerx, centery, width, mau, hinh));
+                // if (mau == '#4472C4') {
+                //     mau = 'white';
+                // } else {
+                //     mau = '#4472C4';
+                // }
+                console.log(hinh);
+                hinh = !hinh;
+                if (hinh) {
+                    width = width / 2;
                 } else {
-                    mau = '#4472C4';
+                    width = 2 * width / Math.sqrt(2);
                 }
-
-                quay = !quay;
-                chieuDai = chieuDai * Math.sqrt(2) / 2;
-                console.log(quay);
+                // width = width * Math.sqrt(2) / 2;
+                
             }
         }
 
         createSquare(N);
-        
-        addEventListener("resize", () => draw());
-        
+
+        // addEventListener("resize", () => draw());
+
         function animate() {
             requestAnimationFrame(animate);
             c.clearRect(0, 0, canvas.width, canvas.height);
