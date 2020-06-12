@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pattern hinh vuong</title>
+    <title>Pattern tron vuong</title>
     <style>
         #canvas {
             position: absolute;
@@ -26,7 +26,7 @@
         canvas.width = innerWidth;
         canvas.height = innerHeight;
 
-        class Square {
+        class Pattern {
             constructor(centerx, centery, width, color, pattern) {
                 this.centerx = centerx;
                 this.centery = centery;
@@ -35,21 +35,56 @@
                 this.pattern = pattern;
             }
             draw() {
-                // let rect_width = 200;
                 c.fillStyle = this.color;
 
                 if (this.pattern) {
-                    c.arc(this.centerx, this.centery, this.width, 0, Math.PI * 2, false);
-                } else {
+                    // c.save();
+                    c.arc(this.centerx, this.centery, this.rect_width, 0, Math.Pi * 2, false);
+                    c.fill();
+                    c.stroke();
+                    // c.restore();
+                }
+                else {
                     c.save();
                     c.translate(this.centerx, this.centery);
-                    // c.rotate(Math.PI / 4);
-                    c.fillRect(this.centerx - this.width * Math.sin(Math.PI / 4), this.centery - this.width * Math.sin(Math.PI / 4), this.width, this.width);
+                    c.fillRect(- this.rect_width * Math.cos(Math.PI / 4), - this.rect_width * Math.sin(Math.PI / 4), this.rect_width * 2 / Math.sqrt(2), this.rect_width * 2 / Math.sqrt(2));
                     c.restore();
                 }
             }
         }
 
+        let centerx = canvas.width / 2;
+        let centery = canvas.height / 2;
+
+        let N = 10; //so vong lap tao ra hinh
+        let hinh = []; //mang chua cac hinh
+
+        //cac bien dung de thay doi gia tri cua hinh vuong khi duoc ve lai sau moi vong lap
+        // let mau = 'blue';
+        let pattern = true;
+        let banKinh = 400;
+
+        function createPattern(N) {
+            for (let i = 0; i < N; i++) {
+                hinh.push(new Pattern(centerx, centery, banKinh, rgb(), pattern));
+                console.log(pattern);
+                console.log(banKinh);
+
+                pattern ? banKinh = banKinh : banKinh = banKinh / Math.sqrt(2);
+                pattern = !pattern;
+            }
+        }
+
+        createPattern(N);
+
+        function animate() {
+            requestAnimationFrame(animate);
+            c.clearRect(0, 0, canvas.width, canvas.height);
+            hinh.forEach((Pattern) => Pattern.draw());
+        }
+
+        animate();
+        
         function rgb() {
             color = 'rgb(';
             for (var i = 0; i < 3; i++) {
@@ -58,48 +93,10 @@
             return color.replace(/\,$/, ')');
         }
 
-        let centerx = canvas.width / 2;
-        let centery = canvas.height / 2;
-
-        let N = 10; //so vong lap tao ra hinh
-        let squares = []; //mang chua cac hinh
-
-        //cac bien dung de thay doi gia tri cua hinh vuong khi duoc ve lai sau moi vong lap
-        let mau = rgb();
-        let hinh = true;//neu true thi ve hinh tron, false thi ve hinh vuong
-        let width = 300;
-
-        function createSquare(N) {
-            for (let i = 0; i < N; i++) {
-                squares.push(new Square(centerx, centery, width, mau, hinh));
-                // if (mau == '#4472C4') {
-                //     mau = 'white';
-                // } else {
-                //     mau = '#4472C4';
-                // }
-                console.log(hinh);
-                hinh = !hinh;
-                if (hinh) {
-                    width = width / 2;
-                } else {
-                    width = 2 * width / Math.sqrt(2);
-                }
-                // width = width * Math.sqrt(2) / 2;
-                
-            }
-        }
-
-        createSquare(N);
-
-        // addEventListener("resize", () => draw());
-
-        function animate() {
-            requestAnimationFrame(animate);
-            c.clearRect(0, 0, canvas.width, canvas.height);
-            squares.forEach((Square) => Square.draw());
-        }
-
-        animate();
+        addEventListener("resize", function () {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+        });
 
     </script>
 </body>

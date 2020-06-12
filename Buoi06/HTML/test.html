@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pattern hinh vuong</title>
+    <title>Test</title>
     <style>
         #canvas {
             position: absolute;
@@ -27,61 +27,81 @@
         canvas.height = innerHeight;
 
         class Square {
-            constructor(centerx, centery, width, color, rotate) {
+            constructor(centerx, centery, width, color) {
                 this.centerx = centerx;
                 this.centery = centery;
-                this.rect_width = width;
+                this.rect_width = width * 2 / Math.sqrt(2);
                 this.color = color;
-                this.rotate = rotate;
             }
+
             draw() {
                 c.fillStyle = this.color;
-                c.fillRect(this.centerx - this.rect_width / 2, this.centery - this.rect_width / 2, this.rect_width, this.rect_width);
+                c.fillRect(this.centerx - this.rect_width / 2, this.centery - this.rect_width * 2, this.rect_width, this.rect_width);
             }
         }
 
+        class Oral {
+            constructor(centerx, centery, radius, color) {
+                this.centerx = centerx;
+                this.centery = centery;
+                this.radius = radius;
+                this.color = color;
+            }
 
+            draw() {
+                c.fillStyle = this.color;
+                c.arc(this.centerx, this.centery, this.radius, 0, 2 * Math.PI, false);
+                c.fill();
+            }
+        }
 
         let centerx = canvas.width / 2;
         let centery = canvas.height / 2;
+        let N = 10 //Thiết lập số vòng lặp
+        // let color = rgb();//Màu tự động
+        let radius = 300;
+        let parttern = [];
 
-        let N = 10; //so vong lap tao ra hinh vuong
-        let squares = []; //mang chua cac hinh vuong
-        let hinhTron = new Square(200, 200, 50, 'red', true);
-        // hinhTron.draw();
-
-        // //cac bien dung de thay doi gia tri cua hinh vuong khi duoc ve lai sau moi vong lap
-        // let mau = '#4472C4';
-        // let quay = false;
-        // let chieuDai = canvas.width / 3.5;
-
-        function createSquare(N) {
+        function createPattern(N) {
             for (let i = 0; i < N; i++) {
-                squares.push(new Square(centerx, centery, chieuDai, mau, quay));
-                if (mau == '#4472C4') {
-                    mau = 'white';
+                if (i % 2 == 0) {
+                    parttern.push(new Oral(centerx, centery, radius, rgb()));
                 } else {
-                    mau = '#4472C4';
+                    parttern.push(new Square(centerx, centery, radius, rgb()));
                 }
-
-                quay = !quay;
-                // chieuDai = chieuDai * Math.sqrt(2) / 2;
-                console.log(quay);
             }
         }
 
-        // createSquare(N);
-        
-        addEventListener("resize", () => draw());
-        
+        createPattern(N);
+
         function animate() {
             requestAnimationFrame(animate);
             c.clearRect(0, 0, canvas.width, canvas.height);
-            // squares.forEach((Square) => Square.draw());
-            hinhTron.draw();
+            for (let i = 0; i < N; i++) {
+                if (i % 2 == 0) {
+                    parttern[i].draw();
+                    console.log("draw oral");
+                } else {
+                    parttern[i].draw();
+                    console.log("draw square");
+                }
+            }
         }
 
         animate();
+
+        function rgb() {
+            color = 'rgb(';
+            for (var i = 0; i < 3; i++) {
+                color += Math.floor(Math.random() * 255) + ',';
+            }
+            return color.replace(/\,$/, ')');
+        }
+
+        addEventListener("resize", function () {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+        });
 
     </script>
 </body>

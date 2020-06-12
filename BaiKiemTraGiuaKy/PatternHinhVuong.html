@@ -38,7 +38,7 @@
                 // let rect_width = 200;
                 c.fillStyle = this.color;
 
-                if (!this.rotate) {
+                if (this.rotate) {
                     c.fillRect(this.centerx - this.rect_width / 2, this.centery - this.rect_width / 2, this.rect_width, this.rect_width);
                 } else {
                     c.save();
@@ -60,7 +60,7 @@
 
         //cac bien dung de thay doi gia tri cua hinh vuong khi duoc ve lai sau moi vong lap
         let mau = '#4472C4';
-        let quay = false;
+        let quay = true;
         let chieuDai = canvas.width / 3.5;
 
         function createSquare(N) {
