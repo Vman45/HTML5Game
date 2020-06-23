@@ -1,0 +1,186 @@
+<html>
+
+<body style="position: relative;">
+  <!-- <p style = "position: absolute; left: 190; top: 110; border: solid whitesmoke 1px; margin: auto;">abc</p> -->
+
+  <canvas id="canvas"></canvas>
+
+  <script>
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+
+    var radius = 400 / 2;
+    radius = radius * 0.70;
+
+    function drawFace(ctx, radius) {
+      var grad;
+
+      ctx.beginPath();
+      ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+      ctx.fillStyle = 'white';
+      ctx.fill();
+
+      grad = ctx.createRadialGradient(0, 0, radius * 0.95, 0, 0, radius * 1.05);
+      grad.addColorStop(0, '#333');
+      grad.addColorStop(0.5, 'white');
+      grad.addColorStop(1, '#333');
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = radius * 0.1;
+      ctx.stroke();
+
+      // Vẽ một điểm ở chính tâm quay kim đồng hồ
+      ctx.beginPath();
+      ctx.arc(0, 0, radius * 0.05, 0, 2 * Math.PI);
+      ctx.fillStyle = '#333';
+      ctx.fill();
+      ctx.closePath();
+    }
+
+    function drawBorder() {
+      // Ve khung
+      ctx.beginPath();
+      ctx.lineWidth = 15;
+      ctx.fillStyle = 'gray';
+      ctx.fillRect(-175, -170, 350, 700);
+      ctx.closePath();
+      ctx.fillStyle = 'black';
+    }
+
+    function drawSecondDot(){
+      let ang;
+      ctx.beginPath();
+      // ctx.fillStyle = 'red';
+      for(let num = 0; num < 60; num++){
+        ang = num * Math.PI / 30 - 0.5 * Math.Pi;
+        ctx.arc(radius * 0.9 * Math.cos(ang), radius * 0.9 * Math.sin(ang), radius * 0.5, 0, 2 * Math.Pi, false);
+      }
+      ctx.closePath();
+    }
+
+    function drawNumbers(ctx, radius) {
+      var ang;
+      var num;
+      ctx.font = radius * 0.15 + "px arial";
+      ctx.textBaseline = "middle";
+      ctx.textAlign = "center";
+      for (num = 1; num < 13; num++) {
+        ang = num * Math.PI / 6 - 0.5 * Math.PI;
+        ctx.fillText(num.toString(), radius * 0.85 * Math.cos(ang), radius * 0.85 * Math.sin(ang));
+      }
+    }
+
+    function drawDateBox() {
+      var now = new Date();
+      var date = now.getDate();
+      var day = now.getDay();
+      ctx.lineWidth = 3;
+      ctx.rect(-40, -80, 80, 30);
+      ctx.moveTo(10, -80);
+      ctx.lineTo(10, -50);
+      ctx.stroke();
+      ctx.font = 15 + "px arial";
+
+      let dayArray = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+      var day = dayArray[now.getDay() - 1];
+
+      ctx.fillText(day.toString(), -28, -60);
+      ctx.fillText(date.toString(), 16, -60);
+    }
+
+
+
+    function drawTime(ctx, radius) {
+      var now = new Date();
+      var hour = now.getHours();
+      var minute = now.getMinutes();
+      var second = now.getSeconds();
+      var milisecond = now.getMilliseconds();
+
+      // second: mỗi giây, kim giây quay được một góc Math.PI / 30
+      second = (second * Math.PI / 30);
+      drawHand(ctx, second, radius * 0.8, radius * 0.02);
+
+      //minute: trong cùng 1 phút ~ Math.PI/30, tính thêm góc dư do kim giây
+      minute = (minute * Math.PI / 30) + (second * Math.PI / (30 * 60));
+      drawHand(ctx, minute, radius * 0.7, radius * 0.05);
+
+
+      //hour: trong cung một giờ ~ Math.PI/6 , tính thêm góc dư do phút, giây
+      hour = hour % 12;
+      hour = (hour * Math.PI / 6) + (minute * Math.PI / (6 * 60)) + (second * Math.PI / (360 * 60));
+      drawHand(ctx, hour, radius * 0.5, radius * 0.05);
+    }
+
+    function drawHand(ctx, angle, length, width) {
+      ctx.beginPath();
+      ctx.lineWidth = width;
+      ctx.lineCap = "round";
+      ctx.moveTo(0, 0);
+      angle -= Math.PI * 0.5;
+      ctx.lineTo(length * Math.cos(angle), length * Math.sin(angle));
+      ctx.stroke();
+    }
+
+    class Pendulum {
+      constructor(context, x, y, length, radius, beta) {
+        this.ctx = context;
+        this.x = x; //tam quay
+        this.y = y;
+        this.length = length;
+        this.radius = radius;
+        this.beta = beta; //Lưu lại góc ban đầu   
+        this.T = 0;
+        this.deltaT = 0.02;
+      }
+
+      update() {
+        // Đây mới là công thức đúng phù hợp với tính chất vật lý con lắc đơn
+        this.angle = this.beta * Math.sin(this.T) + Math.PI * 0.5;
+        this.T += this.deltaT;
+
+        let c = this.ctx;
+        c.beginPath();
+        c.lineWidth = 4;
+        c.lineCap = "round";
+        c.moveTo(this.x, this.y);
+        c.strokeStyle = "white";
+        c.lineTo(this.x + this.length * Math.cos(this.angle),
+          this.y + this.length * Math.sin(this.angle));
+        c.stroke();
+
+        c.beginPath();
+        c.arc(this.x + (this.length + this.radius) * Math.cos(this.angle),
+          this.y + (this.length + this.radius) * Math.sin(this.angle),
+          this.radius, 0, Math.PI * 2, false);
+
+        c.fillStyle = this.color;
+        c.fill();
+        c.stroke();
+        c.closePath();
+      }
+    }
+
+    let pendulum = new Pendulum(ctx, 0, 0, canvas.height * 0.35, 15, Math.PI * 0.2);
+
+    function animate() {
+      requestAnimationFrame(animate);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.save();
+      ctx.translate(canvas.width / 2, 170);
+      drawBorder();
+      pendulum.update();
+      drawFace(ctx, radius);
+      drawSecondDot();
+      drawDateBox();
+      drawNumbers(ctx, radius);
+      drawTime(ctx, radius);
+      ctx.restore();
+    }
+    animate();
+  </script>
+</body>
+
+</html>

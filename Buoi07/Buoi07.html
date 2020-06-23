@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buoi07</title>
+</head>
+
+<body>
+  <script>
+
+
+    function fibonaci(n) {
+      if (n <= 1) {
+        return [];
+      } else {
+        const fibo = fibonaci(n - 1) + fibonaci(n - 2);
+        fibo.push(fibo);
+        return fibo;
+      }
+    }
+    // console.log(countup(5));
+    console.log(fibonaci(5));
+  </script>
+
+</body>
+
+</html>

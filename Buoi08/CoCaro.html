@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vẽ cờ caro</title>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.height = innerHeight;
+        canvas.width = innerWidth;
+
+        class Game {
+            constructor(row, collum) {
+                this.row = row;
+                this.collum = collum;
+            }
+
+            drawGrid() {
+                let width = 50;
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                for (let i = 0; i <= this.row; i++) {
+                    ctx.lineTo(width * collum, width * i);
+                    ctx.moveTo(0, width * (i + 1));
+                }
+                ctx.stroke();
+                ctx.closePath();
+            }
+
+            drawX() {
+
+            }
+
+            drawY() {
+
+            }
+
+            clear() {
+
+            }
+
+        }
+
+        let coCaro = new Game(30, 30);
+        coCaro.drawGrid();
+    </script>
+</body>
+
+</html>
