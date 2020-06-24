@@ -27,27 +27,28 @@
         canvas.height = innerHeight;
 
         class Pattern {
-            constructor(centerx, centery, width, color, pattern) {
+            constructor(centerx, centery, radius, color, pattern) {
                 this.centerx = centerx;
                 this.centery = centery;
-                this.rect_width = width;
+                this.radius = radius;
                 this.color = color;
-                this.pattern = pattern;
+                this.pattern = pattern;//kieu boolean
             }
             draw() {
                 c.fillStyle = this.color;
 
                 if (this.pattern) {
                     // c.save();
-                    c.arc(this.centerx, this.centery, this.rect_width, 0, Math.Pi * 2, false);
+                    c.beginPath();//Phai co cai nay thi moi khong bi de hinh
+                    c.arc(this.centerx, this.centery, this.radius, 0, Math.PI * 2, false);
                     c.fill();
                     // c.stroke();
+                    c.closePath();
                     // c.restore();
-                }
-                else {
+                }else {
                     c.save();
                     c.translate(this.centerx, this.centery);
-                    c.fillRect(- this.rect_width * Math.cos(Math.PI / 4), - this.rect_width * Math.sin(Math.PI / 4), this.rect_width * 2 / Math.sqrt(2), this.rect_width * 2 / Math.sqrt(2));
+                    c.fillRect(- this.radius * Math.cos(Math.PI / 4), - this.radius * Math.sin(Math.PI / 4), this.radius * Math.sqrt(2), this.radius * Math.sqrt(2));
                     c.restore();
                 }
             }
@@ -62,15 +63,15 @@
         //cac bien dung de thay doi gia tri cua hinh vuong khi duoc ve lai sau moi vong lap
         // let mau = 'blue';
         let pattern = true;
-        let banKinh = 400;
+        let radius = 300;
 
         function createPattern(N) {
             for (let i = 0; i < N; i++) {
-                hinh.push(new Pattern(centerx, centery, banKinh, rgb(), pattern));
+                hinh.push(new Pattern(centerx, centery, radius, rgb(), pattern));
                 console.log(pattern);
-                console.log(banKinh);
+                console.log(radius);
 
-                pattern ? banKinh = banKinh : banKinh = banKinh / Math.sqrt(2);
+                pattern ? radius = radius : radius = radius * Math.sqrt(2) / 2;
                 pattern = !pattern;
             }
         }
