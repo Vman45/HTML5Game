@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Draw</title>
+  <style>
+    .container{
+      position: relative;
+    }
+    
+    #canvas {
+      /* position: absolute; */
+      margin-top: 39.5px;
+      /* margin: 0px; */
+      padding: 0px;
+      width: 812px;
+      height: 400px;
+      background-color:#333;
+    }
+
+    .box_color, .box_line {
+      display: inline-block;
+      position: absolute;
+      border-top: 2px solid;
+      border-left: 2px solid;
+      border-right: 2px solid;
+    }
+
+    .box_line{
+      height: 39.5px;
+      margin-top: 0;
+      left: 540px;
+    }
+
+    .color {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      margin-top: 3.5px;
+      border: solid 0.5px black;
+    }
+
+    .line_width {
+      margin-top: 12px;
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      height: 0px;
+      transform: rotate(45deg);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="box_color">
+      <span style="background: #FF0000; margin-left: 3.5px;" class="color"></span>
+      <span style="background: #FF8000;" class="color"></span>
+      <span style="background: #F7FE2E;" class="color"></span>
+      <span style="background: #9AFE2E;" class="color"></span>
+      <span style="background: #00FF00;" class="color"></span>
+      <span style="background: #00FFFF;" class="color"></span>
+      <span style="background: #2E64FE;" class="color"></span>
+      <span style="background: #2E2EFE;" class="color"></span>
+      <span style="background: #8000FF;" class="color"></span>
+      <span style="background: #BF00FF;" class="color"></span>
+      <span style="background: #FF00FF;" class="color"></span>
+      <span style="background: #FF0080;" class="color"></span>
+      <span style="background: #848484;" class="color"></span>
+      <span style="background: #000000;" class="color"></span>
+      <span style="background: #FFFFFF; margin-right: 3.5px;" class="color"></span>
+    </div>
+
+    <div class="box_line">
+      <span class="line_width" style="height: 1px; background-color: black;"></span>
+      <span class="line_width" style="height: 2px; background-color: black;"></span>
+      <span class="line_width" style="height: 3px; background-color: black;"></span>
+      <span class="line_width" style="height: 4px; background-color: black;"></span>
+      <span class="line_width" style="height: 5px; background-color: black;"></span>
+      <span class="line_width" style="height: 6px; background-color: black;"></span>
+      <span class="line_width" style="height: 7px; background-color: black;"></span>
+      <span class="line_width" style="height: 8px; background-color: black;"></span>
+    </div>
+
+    <canvas id="canvas"></canvas><br>
+
+    <button>Clear</button>
+  </div>
+
+
+  <script>
+    var canvas = document.getElementById("canvas");
+    var c = canvas.getContext("2d");
+    let isDraw = false;
+
+    canvas.addEventListener("click", function (event) {
+      c.moveTo(event.offsetX, event.offsetY);
+      isDraw = !isDraw;
+    });
+
+    canvas.addEventListener("mousemove", function (event) {
+      if (isDraw) {
+        c.lineTo(event.offsetX, event.offsetY);
+        c.strokeStyle = 'white';
+        c.stroke();
+      }
+    });
+  </script>
+
+</body>
+
+</html>

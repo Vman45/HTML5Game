@@ -1,0 +1,67 @@
+<!--
+  Vẽ kẻ ngang
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #canvas {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" style="background-color:#DDDDDD"></canvas>
+
+  <script>
+    const canvas = document.getElementById("canvas");
+    const c = canvas.getContext('2d');
+
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+
+
+    class Board {
+
+      constructor(cellWidth, row, col) {
+        this.cellWidth = cellWidth;
+        this.row = row;
+        this.col = col;
+        this.margin = 5;
+        canvas.width = this.col * this.cellWidth + 2 * this.margin;
+        canvas.height = this.row * this.cellWidth + 2 * this.margin;
+      }
+
+
+      //Vẽ lại 
+      drawGrid() {
+        // Vẽ kẻ ngang
+        c.lineWidth = 1;
+
+        // set line color
+        c.strokeStyle = '#000000';
+        for (let i = 0; i < this.row + 1; i++) {
+          c.moveTo(this.margin, this.margin + i * this.cellWidth);
+          c.lineTo(this.margin + this.col * this.cellWidth, this.margin + i * this.cellWidth);
+        }
+        c.stroke();
+      }
+
+    }
+    let board = new Board(40, 10, 10);
+    board.drawGrid();
+    //addEventListener("resize", () => board.resize());
+
+
+  </script>
+</body>

@@ -1,0 +1,75 @@
+<!--
+  Bổ xung marginTop, marginLeft, marginBottom, marginRight
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #canvas {
+      position: absolute;
+      top: 5;
+      bottom: 5;
+      left: 5;
+      right: 5;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" style="background-color:#DDDDDD"></canvas>
+
+  <script>
+    const canvas = document.getElementById("canvas");
+    const c = canvas.getContext('2d');
+
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+
+
+    class Board {
+      constructor(cellWidth, row, col) {
+        this.cellWidth = cellWidth;
+        this.row = row;
+        this.col = col;
+        //Bổ xung margin cho tổng quát hơn
+        this.marginTop = 100;
+        this.marginLeft = 5;
+        this.marginBottom = 5;
+        this.marginRight = 5;
+        canvas.width = this.col * this.cellWidth + this.marginLeft + this.marginRight;
+        canvas.height = this.row * this.cellWidth + this.marginTop + this.marginBottom;
+      }
+
+
+      //Vẽ lại 
+      drawGrid() {
+
+        c.lineWidth = 1;  // set line color
+        // Vẽ kẻ ngang
+        c.strokeStyle = '#000000';
+        for (let i = 0; i < this.row + 1; i++) {
+          c.moveTo(this.marginLeft, this.marginTop + i * this.cellWidth);
+          c.lineTo(this.marginLeft + this.col * this.cellWidth, this.marginTop + i * this.cellWidth);
+        }
+
+        //Vẽ kẻ dọc
+        for (let j = 0; j < this.col + 1; j++) {
+          c.moveTo(this.marginLeft + j * this.cellWidth, this.marginTop);
+          c.lineTo(this.marginLeft + j * this.cellWidth, this.marginTop + this.row * this.cellWidth);
+        }
+        c.stroke();
+      }
+
+    }
+    let board = new Board(40, 25, 50);
+    board.drawGrid();
+
+
+
+  </script>
+</body>

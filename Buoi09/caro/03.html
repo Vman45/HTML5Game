@@ -1,0 +1,141 @@
+<!--
+  Bổ xung marginTop, marginLeft, marginBottom, marginRight
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #canvas {
+      position: absolute;
+      top: 5;
+      bottom: 5;
+      left: 5;
+      right: 5;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" style="background-color:#DDDDDD"></canvas>
+
+  <script>
+    const canvas = document.getElementById("canvas");
+    const c = canvas.getContext('2d');
+
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+
+
+    class Board {
+      constructor(cellWidth, row, col) {
+        this.cellWidth = cellWidth;
+        this.row = row;
+        this.col = col;
+        //Bổ xung margin cho tổng quát hơn
+        this.marginTop = 100;
+        this.marginLeft = 5;
+        this.marginBottom = 5;
+        this.marginRight = 5;
+        canvas.width = this.col * this.cellWidth + this.marginLeft + this.marginRight;
+        canvas.height = this.row * this.cellWidth + this.marginTop + this.marginBottom;
+      }
+
+
+      //Vẽ lại 
+      drawGrid() {
+
+        c.lineWidth = 1;  // set line color
+        // Vẽ kẻ ngang
+        c.strokeStyle = '#000000';
+
+        for (let i = 0; i < this.row + 1; i++) {
+          c.beginPath();//tại sao cho beginPath ra ngoài thì nó lại vẽ tất cả nhỉ. chắc vì đây nó bắt đầu lại, mỗi kẻ là 1 draw riêng biệt. CÒn cho ra ngoài thì nó sẽ có chung lineWidth
+          if (i === 0 || i === this.row) {
+            c.lineWidth = 2;
+          } else {
+            c.lineWidth = 1;
+          }
+          c.moveTo(this.marginLeft, this.marginTop + i * this.cellWidth);
+          c.lineTo(this.marginLeft + this.col * this.cellWidth, this.marginTop + i * this.cellWidth);
+          c.stroke();
+        }
+        c.closePath();
+
+        //Vẽ kẻ dọc
+        for (let j = 0; j < this.col + 1; j++) {
+          c.beginPath();
+          if (j === 0 || j === this.col) {
+            c.lineWidth = 2;
+          } else {
+            c.lineWidth = 1;
+          }
+
+          c.moveTo(this.marginLeft + j * this.cellWidth, this.marginTop);
+          c.lineTo(this.marginLeft + j * this.cellWidth, this.marginTop + this.row * this.cellWidth);
+          c.stroke();
+        }
+        c.closePath();
+
+        //
+        this.data = [];
+        this.create2DArray();
+
+        //
+        this.Xturn = true;
+      }
+
+      create2DArray() {
+        for (let i = 0; i < this.row; i++) {
+          this.data[i] = new Array(this.col);//giá trị là mảng trống có length là this.col cho các index của mảng data.
+          this.data[i].fill(0, 0);//điền giá trị mặc định là 0 từ index 0 cho các mảng
+        }
+
+        // this.data[0][0] = 1;
+        // this.data[0][1] = 2;
+        // console.log(this.data)
+      }
+
+      handleClick(event) {
+        // console.log(`Mouse click: clientX = ${event.offsetX} - clientY = ${event.offsetY}`);
+        let x = event.offsetX;
+        let y = event.offsetY;
+
+        let i = Math.floor((y - this.marginTop) / this.cellWidth);
+        let j = Math.floor((x - this.marginLeft) / this.cellWidth);
+        console.log(`i = ${i}, j = ${j}`);
+
+        //bắt đầu khởi tạo mảng giá trị cho data bằng cách bắt sự kiện và gán giá trị
+        if (i >= 0 && j >= 0 && data[i][j] === 0) {
+          if (this.Xturn) {
+            this.data[i][j] = 1//đây là x. X = 1
+          } else {
+            this.data[i][j] = 2;//đây là y, Y = 2
+          }
+          console.log(this.data);
+          this.Xturn = !this.Xturn;
+        }
+      }
+    }
+
+    canvas.addEventListener('click', (event) => {
+      board.handleClick(event);
+    }, false)
+
+    
+    let board = new Board(40, 10, 10);
+    board.drawGrid();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      c.clearRect(0, 0, canvas.width, canvas.height);
+      board.drawGrid();
+    }
+
+    animate();
+  </script>
+</body>
