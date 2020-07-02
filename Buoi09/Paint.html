@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painting</title>
+    <style>
+        .container {
+            position: relative;
+        }
+
+        #canvas {
+            /* position: absolute; */
+            margin-top: 39.5px;
+            /* margin: 0px; */
+            padding: 0px;
+            /* width: 812px; */
+            /* height: 400px; */
+            background-color: #333;
+        }
+
+        .box_color,
+        .box_line {
+            display: inline-block;
+            position: absolute;
+            border-top: 2px solid;
+            border-left: 2px solid;
+            border-right: 2px solid;
+        }
+
+        .box_line {
+            height: 39.5px;
+            margin-top: 0;
+            left: 540px;
+        }
+
+        .color {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            margin-top: 3.5px;
+            border: solid 0.5px black;
+        }
+
+        .line_width {
+            margin-top: 12px;
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            height: 0px;
+            transform: rotate(45deg);
+        }
+
+        .color:hover,
+        .line_width:hover {
+            box-shadow: 0px 0px 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box_color">
+            <span style="background: #ff0000; margin-left: 3.5px;" class="color" id="0"></span>
+            <span style="background: #ffa500;" class="color" id="1"></span>
+            <span style="background: #ffff00;" class="color" id="2"></span>
+            <span style="background: #9AFE2E;" class="color" id="3"></span>
+            <span style="background: #00FF00;" class="color" id="4"></span>
+            <span style="background: #00FFFF;" class="color" id="5"></span>
+            <span style="background: #2E64FE;" class="color" id="6"></span>
+            <span style="background: #2E2EFE;" class="color" id="7"></span>
+            <span style="background: #8000FF;" class="color" id="8"></span>
+            <span style="background: #BF00FF;" class="color" id="9"></span>
+            <span style="background: #FF00FF;" class="color" id="10"></span>
+            <span style="background: #FF0080;" class="color" id="11"></span>
+            <span style="background: #848484;" class="color" id="12"></span>
+            <span style="background: #000000;" class="color" id="13"></span>
+            <span style="background: #FFFFFF; margin-right: 3.5px;" class="color" id="14"></span>
+        </div>
+
+        <div class="box_line">
+            <span class="line_width" style="height: 1px; background-color: black;" id="-1"></span>
+            <span class="line_width" style="height: 2px; background-color: black;" id="-2"></span>
+            <span class="line_width" style="height: 3px; background-color: black;" id="-3"></span>
+            <span class="line_width" style="height: 4px; background-color: black;" id="-4"></span>
+            <span class="line_width" style="height: 5px; background-color: black;" id="-5"></span>
+            <span class="line_width" style="height: 6px; background-color: black;" id="-6"></span>
+            <span class="line_width" style="height: 7px; background-color: black;" id="-7"></span>
+            <span class="line_width" style="height: 8px; background-color: black;" id="-8"></span>
+        </div>
+        <div
+            style="display: inline-block; position: absolute; width: 30px; height: 30px; width: 40px; height: 37px; left: 810px; border: #000000 solid 2.5px;">
+            <img src="Capture.PNG" alt="Logo" style="width: 100%; height: 100%;">
+        </div>
+    </div>
+
+    <canvas id="canvas" width="855" height="500" style="background-color:#000"></canvas><br>
+    <button id="btnClear">Clear</button>
+
+    <script>
+        class FreeHand {
+            constructor(canvas) {
+                this.canvas = canvas
+                this.context = canvas.getContext("2d");
+
+                this.isDraw = false;
+                this.points = [];
+
+                this.context.lineWidth = 3;
+                this.context.lineJoin = 'round';
+                this.context.lineCap = 'round';
+                this.context.strokeStyle = 'pink';
+
+                this.memCanvas = document.createElement('canvas');
+                this.memCanvas.width = canvas.width;
+                this.memCanvas.height = canvas.height;
+                this.memCtx = this.memCanvas.getContext('2d');
+            }
+
+            onmousedown(event) {
+                this.x = event.offsetX;
+                this.y = event.offsetY;
+
+                this.points.push({
+                    x: this.x,
+                    y: this.y
+                });
+
+                this.isDraw = true;
+                // this.context.strokeStyle = rgb();
+            }
+
+            onmousemove(event) {
+                if (this.isDraw) {
+                    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                    // put back the saved content
+                    this.context.drawImage(this.memCanvas, 0, 0);
+                    this.points.push({
+                        x: event.offsetX,
+                        y: event.offsetY
+                    });
+                    this.drawPoints();
+                }
+            }
+
+            onmouseup(event) {
+                if (this.isDraw) {
+                    this.isDraw = false;
+                    // When the pen is done, save the resulting context
+                    // to the in-memory canvas
+                    this.memCtx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                    this.memCtx.drawImage(this.canvas, 0, 0);
+                    this.points = [];
+                }
+            }
+
+            drawPoints() {
+                let ctx = this.context;
+
+                if (this.points.length < 6) return;
+
+                ctx.beginPath(), ctx.moveTo(this.points[0].x, this.points[0].y);
+                let i;
+                for (i = 1; i < this.points.length - 2; i++) {
+                    var c = (this.points[i].x + this.points[i + 1].x) / 2;
+                    var d = (this.points[i].y + this.points[i + 1].y) / 2;
+                    ctx.quadraticCurveTo(this.points[i].x, this.points[i].y, c, d);
+                }
+                ctx.quadraticCurveTo(this.points[i].x, this.points[i].y, this.points[i + 1].x, this.points[i + 1].y);
+                ctx.stroke();
+            }
+
+            clearCanvas() {
+                this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                this.memCtx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            }
+
+            changeColor(id) {
+                let colorSelect = document.getElementById(id).style.background;
+                this.context.strokeStyle = colorSelect;
+            }
+
+            changeWidth(dolon) {
+                let widthSelect = document.getElementById(dolon).id;
+                this.context.lineWidth = -widthSelect;
+            }
+        }
+        // function rgb() {
+        //     color = 'rgb(';
+        //     for (var i = 0; i < 3; i++) {
+        //         color += Math.floor(Math.random() * 255) + ',';
+        //     }
+        //     return color.replace(/\,$/, ')');
+        // }
+
+        let canvas = document.getElementById("canvas");
+        let freehand = new FreeHand(canvas);
+        canvas.onmousedown = (event) => {
+            freehand.onmousedown(event);
+        };
+
+        canvas.onmousemove = (event) => {
+            freehand.onmousemove(event);
+        }
+
+        canvas.onmouseup = (event) => {
+            freehand.onmouseup(event);
+        }
+
+        let btnClear = document.getElementById("btnClear");
+        btnClear.onclick = () => {
+            freehand.clearCanvas();
+        }
+
+        for (let i = 0; i <= 14; i++) {
+            document.getElementById(i).onclick = () => {
+                freehand.changeColor(i);
+            }
+        }
+
+        for (let i = -1; i >= -8; i--) {
+            document.getElementById(i).onclick = () => {
+                freehand.changeWidth(i);
+            }
+        }
+
+        console.log(document.getElementById('-2').id)// test thu ket qua
+    </script>
+</body>
+
+</html>
