@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Dap Gach</title>
+    <style>
+        #canvas {
+            margin: 0px 300px 0px 300px;
+            /* margin-right: 100px; */
+            /* margin: 50px; */
+            border: solid 2px green;
+            /* width: 85vw; */
+            /* height: 70vh; */
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        let canvas = document.getElementById('canvas');
+        let ctx = canvas.getContext('2d');
+
+        canvas.width = innerWidth - 600;
+        canvas.height = innerHeight - 50;
+
+        class Ball {
+            constructor(x, y, radius, color, speed) {
+                this.radius = radius;
+                this.color = color;
+                this.speed = speed;
+                this.x = x;
+                this.y = y;
+                this.dx = speed;
+                this.dy = speed;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.fillStyle = this.color;
+                ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+                ctx.fill();
+                ctx.closePath();
+            }
+
+            move() {
+
+                if (this.y + this.radius + this.dy >= canvas.height) {
+                    this.dy = -this.dy;
+                    // this.dy = 0;
+                    // this.dx = 0;
+                    // window.alert("You are deadddddddddd")
+                }
+                if (this.x + this.radius + this.dx >= canvas.width) {
+                    this.dx = -this.dx;
+
+                }
+                if (this.x + this.dx - this.radius <= 0) {
+                    this.dx = -this.dx;
+                }
+                if (this.y + this.dy - this.radius <= 0) {
+                    this.dy = -this.dy;
+                }
+
+                this.x += this.dx;
+                this.y += this.dy;
+                // console.log(this.x, this.y);
+            }
+        }
+
+        class Hand {
+            constructor(x, y, height, width, color) {
+                this.height = height;
+                this.width = width;
+                this.color = color;
+                this.x = x;
+                this.y = y;
+                this.ball = Ball;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.fillStyle = this.color;
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+                ctx.closePath();
+            }
+
+            move() {
+                addEventListener('mousemove', (event) => {
+                    let currentX = event.offsetX;
+                    // ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    this.x = currentX - this.width / 2;
+                    // console.log(event.offsetX);
+
+                    if (ball.y + ball.dy + ball.radius >= this.y && this.x <= ball.x + ball.dx && ball.x  + ball.dx <= this.x + this.width) {
+                        ball.dy = -ball.dy;
+                    }
+                })
+            }
+        }
+
+        class Brick {
+            constructor(x, y, width, height, color){
+                this.x = x;
+                this.y = y;
+                this.width = width;
+                this.height = height;
+                this.color = color;
+            }
+        }
+
+        let ball = new Ball(canvas.width / 2, canvas.height * 0.8, 20, 'red', 3);
+        // ball.draw();
+
+        let handWidth = 150;
+        let handHeight = 30;
+        let hand = new Hand(canvas.width / 2 - handWidth / 2, canvas.height * 0.9 - handHeight, handHeight, handWidth, 'black');
+        // hand.draw();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ball.draw();
+            ball.move();
+            hand.draw();
+            hand.move();
+        }
+
+        animate();
+    </script>
+</body>
+
+</html>

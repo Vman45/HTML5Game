@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Caro full</title>
     <style>
         #canvas {
             position: absolute;
@@ -114,6 +114,7 @@
                     this.Xturn = !this.Xturn;
                     console.log("Xturn is " + this.Xturn);
                 }
+                this.checkWin(i, j);
             }
 
             drawXO() {
@@ -123,13 +124,15 @@
                     for (j = 0; j < this.col; j++) {
                         if (this.data[i][j] === 1) {
                             this.drawX(i, j);// đây là mình đang tổ chức lại code cho nó gọn hơn nếu như mình ko sai. Ta hoàn toàn có thể thay câu lệnh này bằng tập các câu lệnh trong function này
-                            this.checkWin(i, j);
+                            // this.checkWin(i, j);
                         } else if (this.data[i][j] === 2) {
                             this.drawO(i, j);
-                            this.checkWin(i, j);
+                            // this.checkWin(i, j);
                         }
                     }
+                    // this.checkWin(i, j);
                 }
+
             }
 
             drawX(i, j) {
@@ -151,14 +154,76 @@
 
             //kiểm tra điều kiện thắng
             checkWin(i, j) {
-                let countHorizol = 1;
+                let countHorizontal = 1;
                 let countVertical = 1;
+                let countDiagonal = 1;
                 //check theo chieu ngang
-                for (let m = i - 1; m >= 0; m--) {//neu i - 1 < 0 thi lenh ko chay vao day nen ko lo out of bound
-                    if (this.data[i][j] == this.data[m][j]) {
-                        countHorizol++;
-                        if (countHorizol == 5) {
-                            console.log("someone win");
+                for (let m = j - 1; m >= 0; m--) {//neu i - 1 < 0 thi lenh ko chay vao day nen ko lo out of bound
+                    if (this.data[i][m] === this.data[i][j]) {
+                        countHorizontal++;
+                        if (countHorizontal == 5) {
+                            window.alert(`${this.data[i][j]} win`);
+                        }
+                    } else {
+                        break;
+                    }
+                }
+
+                for (let m = j + 1; m <= this.col; m++) {
+                    if (this.data[i][m] === this.data[i][j]) {
+                        countHorizontal++;
+                        if (countHorizontal == 5) {
+                            window.alert(`${this.data[i][j]} win`);
+                        }
+                    } else {
+                        break;
+                    }
+                }
+
+                // check theo chiều dọc
+                for (let m = i - 1; m >= 0; m--) {
+                    if (this.data[m][j] === this.data[i][j]) {
+                        countVertical++;
+                        if (countVertical === 5) {
+                            window.alert(`${this.data[i][j]} win`);
+                        }
+                    } else {
+                        break;
+                    }
+                }
+
+                for (let m = i + 1; m <= this.row; m++) {
+                    if (this.data[m][j] === this.data[i][j]) {
+                        countVertical++;
+                        if (countVertical === 5) {
+                            window.alert(`${this.data[i][j]} win`);
+                        }
+                    } else {
+                        break;
+                    }
+                }
+
+                // Xet theo đường chéo
+                let m = i - 1;
+                let n = j - 1;
+                for (; m >= 0 && n >= 0; m-- && n--) {
+                    if (this.data[m][n] === this.data[i][j]) {
+                        countDiagonal++;
+                        if (countDiagonal === 5) {
+                            window.alert(`${this.data[i][j]} win`);
+                        }
+                    } else {
+                        break;
+                    }
+                }
+
+                let k = i + 1;
+                let l = j + 1;
+                for (; k < this.row && l < this.col; k++ && l++) {
+                    if (this.data[k][l] === this.data[i][j]) {
+                        countDiagonal++;
+                        if (countDiagonal === 5) {
+                            window.alert(`${this.data[i][j]} win`);
                         }
                     } else {
                         break;
