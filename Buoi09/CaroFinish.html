@@ -154,6 +154,14 @@
 
             //kiểm tra điều kiện thắng
             checkWin(i, j) {
+                let win = 'A';
+
+                if(this.data[i][j] == 1){
+                    win = 'X';
+                }else if(this.data[i][j] == 2){
+                    win = 'O';
+                }
+
                 let countHorizontal = 1;
                 let countVertical = 1;
                 let countDiagonal = 1;
@@ -162,7 +170,7 @@
                     if (this.data[i][m] === this.data[i][j]) {
                         countHorizontal++;
                         if (countHorizontal == 5) {
-                            window.alert(`${this.data[i][j]} win`);
+                            window.alert(`${win} win`);
                         }
                     } else {
                         break;
@@ -173,7 +181,7 @@
                     if (this.data[i][m] === this.data[i][j]) {
                         countHorizontal++;
                         if (countHorizontal == 5) {
-                            window.alert(`${this.data[i][j]} win`);
+                            window.alert(`${win} win`);
                         }
                     } else {
                         break;
@@ -185,7 +193,7 @@
                     if (this.data[m][j] === this.data[i][j]) {
                         countVertical++;
                         if (countVertical === 5) {
-                            window.alert(`${this.data[i][j]} win`);
+                            window.alert(`${win} win`);
                         }
                     } else {
                         break;
@@ -196,7 +204,7 @@
                     if (this.data[m][j] === this.data[i][j]) {
                         countVertical++;
                         if (countVertical === 5) {
-                            window.alert(`${this.data[i][j]} win`);
+                            window.alert(`${win} win`);
                         }
                     } else {
                         break;
@@ -210,7 +218,7 @@
                     if (this.data[m][n] === this.data[i][j]) {
                         countDiagonal++;
                         if (countDiagonal === 5) {
-                            window.alert(`${this.data[i][j]} win`);
+                            window.alert(`${win} win`);
                         }
                     } else {
                         break;
@@ -223,7 +231,7 @@
                     if (this.data[k][l] === this.data[i][j]) {
                         countDiagonal++;
                         if (countDiagonal === 5) {
-                            window.alert(`${this.data[i][j]} win`);
+                            window.alert(`${win} win`);
                         }
                     } else {
                         break;
