@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caro full</title>
+    <title>Caro finish</title>
     <style>
         #canvas {
-            position: absolute;
+            /* position: absolute; */
             top: 5;
             bottom: 5;
             left: 5;
@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <canvas id="canvas" style="background-color:#DDDDDD"></canvas>
+    <canvas id="canvas" style="background-color:#DDDDDD"></canvas><br>
 
     <script>
         const canvas = document.getElementById("canvas");
@@ -156,15 +156,16 @@
             checkWin(i, j) {
                 let win = 'A';
 
-                if(this.data[i][j] == 1){
+                if (this.data[i][j] == 1) {
                     win = 'X';
-                }else if(this.data[i][j] == 2){
+                } else if (this.data[i][j] == 2) {
                     win = 'O';
                 }
 
                 let countHorizontal = 1;
                 let countVertical = 1;
-                let countDiagonal = 1;
+                let countDiagonalLeft = 1;
+                let countDiagonalRight = 1;
                 //check theo chieu ngang
                 for (let m = j - 1; m >= 0; m--) {//neu i - 1 < 0 thi lenh ko chay vao day nen ko lo out of bound
                     if (this.data[i][m] === this.data[i][j]) {
@@ -211,13 +212,13 @@
                     }
                 }
 
-                // Xet theo đường chéo
+                // Xet theo đường chéo trái qua phải
                 let m = i - 1;
                 let n = j - 1;
                 for (; m >= 0 && n >= 0; m-- && n--) {
                     if (this.data[m][n] === this.data[i][j]) {
-                        countDiagonal++;
-                        if (countDiagonal === 5) {
+                        countDiagonalLeft++;
+                        if (countDiagonalLeft === 5) {
                             window.alert(`${win} win`);
                         }
                     } else {
@@ -229,8 +230,8 @@
                 let l = j + 1;
                 for (; k < this.row && l < this.col; k++ && l++) {
                     if (this.data[k][l] === this.data[i][j]) {
-                        countDiagonal++;
-                        if (countDiagonal === 5) {
+                        countDiagonalLeft++;
+                        if (countDiagonalLeft === 5) {
                             window.alert(`${win} win`);
                         }
                     } else {
@@ -238,9 +239,38 @@
                     }
                 }
 
+                //Xét theo đường chéo phải qua trái
+                let a = i - 1;
+                let b = j + 1;
+                for (; a >= 0 && b >= 0; a-- && b++) {
+                    if (this.data[a][b] === this.data[i][j]) {
+                        countDiagonalRight++;
+                        if (countDiagonalRight === 5) {
+                            window.alert(`${win} win`);
+                        }
+                    } else {
+                        break;
+                    }
+                }
+
+                let c = i + 1;
+                let d = j - 1;
+                for (; c < this.row && d >= 0; c++ && d--) {
+                    if (this.data[c][d] === this.data[i][j]) {
+                        countDiagonalRight++;
+                        if (countDiagonalRight === 5) {
+                            window.alert(`${win} win`);
+                        }
+                    } else {
+                        break;
+                    }
+                }
+
+                console.log(`horizol: ${countHorizontal}; vertical: ${countVertical}; left to rigt: ${countDiagonalLeft}; right to lef: ${countDiagonalRight}`);
             }
 
         }
+
         let board = new Board(40, 15, 15);
 
 

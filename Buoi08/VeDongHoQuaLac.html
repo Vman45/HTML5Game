@@ -16,26 +16,26 @@
     ctx.translate(canvas.width / 2, radius + 20);
     radius = radius * 0.90;
 
-    
+
     function drawClock() {
       requestAnimationFrame(drawClock);
       drawBorder();
       drawFace(ctx, radius);
-      drawNumbers(ctx, radius);      
+      drawNumbers(ctx, radius);
       drawTime(ctx, radius);
     }
 
     drawClock();
-    
+
     function drawBorder() {
-        ctx.beginPath();
-        ctx.moveTo(- radius - 40, - radius - 20);
-        ctx.lineTo(- radius - 40 + radius * 2 + 40 * 2,- radius - 20);
-        ctx.lineTo(- radius - 40 + radius * 2 + 40 * 2,- radius - 20 + 600);
-        ctx.lineTo(- radius - 40,- radius - 20 + 600);
-        ctx.lineTo(- radius - 40,- radius - 20);
-        ctx.stroke();
-        ctx.closePath();
+      ctx.beginPath();
+      ctx.moveTo(- radius - 40, - radius - 20);
+      ctx.lineTo(- radius - 40 + radius * 2 + 40 * 2, - radius - 20);
+      ctx.lineTo(- radius - 40 + radius * 2 + 40 * 2, - radius - 20 + 600);
+      ctx.lineTo(- radius - 40, - radius - 20 + 600);
+      ctx.lineTo(- radius - 40, - radius - 20);
+      ctx.stroke();
+      ctx.closePath();
     }
 
     function drawFace(ctx, radius) {
@@ -63,7 +63,7 @@
     }
 
     function drawDateBox() {
-        
+
     }
 
     function drawNumbers(ctx, radius) {
@@ -73,8 +73,16 @@
       ctx.textBaseline = "middle";
       ctx.textAlign = "center";
       for (num = 1; num < 13; num++) {
-        ang = num * Math.PI / 6 - 0.5 * Math.PI;        
+        ang = num * Math.PI / 6 - 0.5 * Math.PI;
         ctx.fillText(num.toString(), radius * 0.85 * Math.cos(ang), radius * 0.85 * Math.sin(ang));
+      }
+
+      //doan nay khong biet sao khong duoc
+      for (let i = 0; i < 60; i++) {
+        ang = i * Math.PI / 30 - 0.5 * Math.PI;
+        if (i % 5 != 0) {
+          ctx.arc(radius * 0.8 * Math.cos(ang), radius * 0.8 * Math.sin(ang), radius * 0.05, 0, 2 * Math.PI);
+        }
       }
     }
 
@@ -92,12 +100,12 @@
       //minute: trong cùng 1 phút ~ Math.PI/30, tính thêm góc dư do kim giây
       minute = (minute * Math.PI / 30) + (second * Math.PI / (30 * 60));
       drawHand(ctx, minute, radius * 0.8, radius * 0.07);
-      
+
 
       //hour: trong cung một giờ ~ Math.PI/6 , tính thêm góc dư do phút, giây
-      hour = hour % 12; 
+      hour = hour % 12;
       hour = (hour * Math.PI / 6) + (minute * Math.PI / (6 * 60)) + (second * Math.PI / (360 * 60));
-      drawHand(ctx, hour, radius * 0.5, radius * 0.07);      
+      drawHand(ctx, hour, radius * 0.5, radius * 0.07);
     }
 
     function drawHand(ctx, angle, length, width) {
@@ -106,7 +114,7 @@
       ctx.lineCap = "round";
       ctx.moveTo(0, 0);
       angle -= Math.PI * 0.5;
-      ctx.lineTo(length * Math.cos(angle), length*Math.sin(angle));
+      ctx.lineTo(length * Math.cos(angle), length * Math.sin(angle));
       ctx.stroke();
     }
 

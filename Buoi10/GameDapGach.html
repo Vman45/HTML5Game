@@ -92,9 +92,10 @@
                     let currentX = event.offsetX;
                     // ctx.clearRect(0, 0, canvas.width, canvas.height);
                     this.x = currentX - this.width / 2;
+                    // this.y = event.offsetY;
                     // console.log(event.offsetX);
 
-                    if (ball.y + ball.dy + ball.radius >= this.y && this.x <= ball.x + ball.dx && ball.x  + ball.dx <= this.x + this.width) {
+                    if (ball.y + ball.dy + ball.radius >= this.y && this.x <= ball.x + ball.dx && ball.x + ball.dx <= this.x + this.width) {
                         ball.dy = -ball.dy;
                     }
                 })
@@ -102,7 +103,7 @@
         }
 
         class Brick {
-            constructor(x, y, width, height, color){
+            constructor(x, y, width, height, color) {
                 this.x = x;
                 this.y = y;
                 this.width = width;
@@ -111,7 +112,7 @@
             }
         }
 
-        let ball = new Ball(canvas.width / 2, canvas.height * 0.8, 20, 'red', 3);
+        let ball = new Ball(canvas.width / 2, canvas.height * 0.5, 20, 'red', 4);
         // ball.draw();
 
         let handWidth = 150;
