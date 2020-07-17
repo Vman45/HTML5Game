@@ -87,6 +87,13 @@
                 if (newPosition !== undefined) {
                     this.x = newPosition;
                 }
+                if (newPosition <= 0) {
+                    this.x = 0
+                }
+                if (newPosition + this.width >= canvas.width) {
+                    this.x = canvas.width - this.width;
+                }
+                // console.log(newPosition, canvas.width, newPosition + this.width);
             }
         }
 
@@ -131,7 +138,7 @@
             requestAnimationFrame(animate);
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ball.draw();
-            ball.move();
+            // ball.move();
             hand.draw();
             hand.move();
         }
