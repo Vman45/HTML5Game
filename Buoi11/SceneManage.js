@@ -47,23 +47,23 @@ class SceneSplash extends Scene {
     }
 
     initHTML() {
-        var gameContainer = document.getElementById("game-container");
+        let gameContainer = document.getElementById("game-container");
         gameContainer.style.backgroundImage = "url('splashscreen.png')";
         // create div container
-        var div = document.createElement('div');
+        let div = document.createElement('div');
         div.className = 'game-layer';
         div.id = this.id;
 
         // play button
-        var playButton = document.createElement('img');
+        let playButton = document.createElement('img');
         playButton.className = "play_but";
         playButton.src = "FruitWars/images/icons/play.png";
         playButton.alt = "Play game";
 
-        var breakLine = document.createElement("br");
+        let breakLine = document.createElement("br");
 
         // setting button
-        var settingButton = document.createElement('img');
+        let settingButton = document.createElement('img');
         settingButton.className = "setting_but";
         settingButton.src = "FruitWars/images/icons/settings.png";
         settingButton.alt = "Settings";
@@ -88,4 +88,50 @@ class SceneSplash extends Scene {
     }
 }
 
-// var sceneSplash = new SceneSplash("scene-splash");
+// Tạo scene chọn màn
+
+// class Levels extends Scene {
+//     constructor(id) {
+//         super();
+//         this.id = id;
+
+//         this.initHTML();
+//     }
+
+//     initHTML(){
+//         let gameContainer = document.getElementById("game-container");
+//         gameContainer.style.backgroundImage = "url('splashscreen.png')";
+//         // create div container
+//         let div = document.createElement('div');
+//         div.className = 'game-layer';
+//         div.id = this.id;
+
+//         // create div container
+//         let div = document.createElement('div');
+//         div.className = 'game-layer';
+
+//         //create level 1
+//         let level_1 = document.createElement('span');
+//         span.className = 'level_1';
+//         level_1.src = "FruitWars/images/icons/level.png";
+//         level_1.alt = "level 1";
+
+//         //create level 1
+//         let level_2 = document.createElement('span');
+//         span.className = "level_2";
+//         level_1.src = "FruitWars/images/icons/level.png";
+//         level_1.alt = "level 2";
+//     }
+
+//     load() {
+
+//     }
+
+//     render() {
+//         document.getElementById(this.id).style.display = "block";
+//     }
+
+//     remove() {
+//         document.getElementById(this.id).style.display = "none";
+//     }
+// }

@@ -17,3 +17,7 @@
 .play_but {
     margin-top: 200px;
 }
+
+.play_but, .setting_but {
+    cursor: pointer;
+}
