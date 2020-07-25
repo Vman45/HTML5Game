@@ -1,0 +1,19 @@
+#game-container {
+    width: 640px;
+    height: 480px;
+    position: relative;;
+}
+
+/* moi scene 1 css nhe cha noi */
+
+.game-layer {
+    position: absolute;
+    width: 640px;
+    height: 480px;
+    border: solid 1px;
+    text-align: center;
+}
+
+.play_but {
+    margin-top: 200px;
+}

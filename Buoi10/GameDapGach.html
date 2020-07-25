@@ -115,13 +115,18 @@
         }
 
         class GenerateBrick {
-            constructor(n, space) {
+            constructor(n) {
                 this.quantity = n;
-                this.space = space;
+                this.space = (canvas.width - n * Brick.width) / (n + 1);
+                this.room = [];
             }
 
             createBricks() {
-
+                for(let i = 0; i < 10; i++) {
+                    let brick = new Brick (this.space + (brick.width + this.space) * i, this.space, brick.width, brick.height, 'green');
+                    this.room.push(brick);
+                    // console.log("co chay duoc vao day khong");
+                }
             }
         }
 
@@ -133,6 +138,8 @@
         let handWidth = 150;
         let handHeight = 30;
         let hand = new Hand(canvas.width / 2 - handWidth / 2, canvas.height * 0.9 - handHeight, handHeight, handWidth, 'black');
+        let manager = new GenerateBrick(10);
+        console.log(manager.room);
 
         function animate() {
             requestAnimationFrame(animate);
