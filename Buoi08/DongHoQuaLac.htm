@@ -84,10 +84,10 @@
       ctx.stroke();
       ctx.font = 15 + "px arial";
 
-      let dayArray = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-      var day = dayArray[now.getDay() - 1];
+      let dayArray = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      var realDay = dayArray[day];
 
-      ctx.fillText(day.toString(), -28, -60);
+      ctx.fillText(realDay, -28, -60);
       ctx.fillText(date.toString(), 16, -60);
     }
 

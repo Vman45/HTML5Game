@@ -7,15 +7,19 @@ var sceneManager = {
     },
 
     transition: function (scene) {
-        if(sceneManager.currentScene != "null"){
+        console.log(sceneManager.currentScene);
+        console.log(sceneManager.scenes);
+        if(sceneManager.currentScene == null){
             sceneManager.currentScene = scene;
-            sceneManager.currentScene.remove();
-            sceneManager.currentScene.load(); 
-            sceneManager.currentScene.render(); 
+            sceneManager.currentScene.load();
+            sceneManager.currentScene.render();
         }else{
+            sceneManager.currentScene.remove();
             sceneManager.currentScene = scene;
-            sceneManager.currentScene.load(); 
-            sceneManager.currentScene.render();  
+            sceneManager.currentScene.load();
+            // console.log(sceneManager.currentScene);
+            // console.log(sceneManager.scenes);
+            sceneManager.currentScene.render();
         }
     },
 }
@@ -35,12 +39,13 @@ class Scene {
 
     remove() {
         console.log("Please implement render function");
+
     }
 }
 
 class SceneSplash extends Scene {
-    constructor(id) {
-        super();
+    constructor(id) {//vay id nay minh truyen vao luc' nao` vay. Hay no' tu lay' ten class cho vao`???
+        super();//khi class con co them thuoc tinh thi ta phai them cau nay
         this.id = id;
 
         this.initHTML();
@@ -59,6 +64,8 @@ class SceneSplash extends Scene {
         playButton.className = "play_but";
         playButton.src = "FruitWars/images/icons/play.png";
         playButton.alt = "Play game";
+        playButton.setAttribute('onClick', 'sceneManager.transition(sceneLevelSelection);');
+
 
         let breakLine = document.createElement("br");
 
@@ -90,48 +97,47 @@ class SceneSplash extends Scene {
 
 // Tạo scene chọn màn
 
-// class Levels extends Scene {
-//     constructor(id) {
-//         super();
-//         this.id = id;
+class sceneLevelSelection extends Scene {
+    constructor(id) {
+        super();
+        this.id = id;
 
-//         this.initHTML();
-//     }
+        this.initHTML();
+    }
 
-//     initHTML(){
-//         let gameContainer = document.getElementById("game-container");
-//         gameContainer.style.backgroundImage = "url('splashscreen.png')";
-//         // create div container
-//         let div = document.createElement('div');
-//         div.className = 'game-layer';
-//         div.id = this.id;
+    initHTML() {
+        let gameContainer = document.getElementById("game-container");
 
-//         // create div container
-//         let div = document.createElement('div');
-//         div.className = 'game-layer';
+        //create div
+        let div = document.createElement('div');
+        div.className = 'game-layer';
+        div.id = this.id
 
-//         //create level 1
-//         let level_1 = document.createElement('span');
-//         span.className = 'level_1';
-//         level_1.src = "FruitWars/images/icons/level.png";
-//         level_1.alt = "level 1";
+        //level button
+        // for(let i = 0; i < levels.data.length; i++){
+            for(let i = 0; i < 2; i++){
+            console.log('co chay vao day khong cung');
+            let level = document.createElement('input');
+            level.type = "button";
+            level.value = i + 1;
+            level.src = "FruitWars/images/icons/level.png";
+            level.alt = "level";
+            level.setAttribute('onClick', `sceneManager.currentLevel.number =   ${i + 1}; secneManager.trasition(sceneLevel);`);
+            div.appendChild(level);
+        }
 
-//         //create level 1
-//         let level_2 = document.createElement('span');
-//         span.className = "level_2";
-//         level_1.src = "FruitWars/images/icons/level.png";
-//         level_1.alt = "level 2";
-//     }
+        gameContainer.appendChild(div);
+    }
 
-//     load() {
+    load() {
 
-//     }
+    }
 
-//     render() {
-//         document.getElementById(this.id).style.display = "block";
-//     }
+    render() {
+        document.getElementById(this.id).style.display = "block";
+    }
 
-//     remove() {
-//         document.getElementById(this.id).style.display = "none";
-//     }
-// }
+    remove() {
+        document.getElementById(this.id).style.display = "none";
+    }
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Piano</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <link rel="stylesheet" href="styles.css" type="text/css" media="screen" charset="utf-8"> -->
+</head>
+
+<body>
+    <div id="container">
+        <canvas id="canvas_id" width="600" height="400" style="border: solid 1px black; background-color: grey;"></canvas>
+    </div>
+
+
+
+    <script src="data.js"></script>
+    <script src="game_framework.js"></script>
+    <script src="Key.js"></script>
+    <script>
+        let key1 = new Key(20, 20, 30, 100, "white");
+        let key2 = new Key(20, 20, 30, 100, "black");
+        key1.render();
+        key2.render();
+        let pipi = new Piano(0, 0, 500, 300);
+    </script>
+    <!-- <script src="main.js"></script> -->
+</body>
+
+</html>
