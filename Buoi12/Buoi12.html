@@ -19,11 +19,25 @@
     <script src="game_framework.js"></script>
     <script src="Key.js"></script>
     <script>
-        let key1 = new Key(20, 20, 30, 100, "white");
-        let key2 = new Key(20, 20, 30, 100, "black");
-        key1.render();
-        key2.render();
-        let pipi = new Piano(0, 0, 500, 300);
+        let piano = new Piano(0, 0, 400, 300, "pink", 10);
+        piano.render();
+        piano.genarateKey();
+
+        // let key1 = new Key(20, 20, 30, 100, "white");
+        // let key2 = new Key(20, 20, 30, 100, "black");
+        // key1.render();
+        // key2.render();
+
+        // let key3 = new Key(90, 20, 30, 100, "white");
+        // key3.render();
+
+
+        console.log(piano.keys);
+        // console.log(piano.whiteKeys.length);
+
+        // for(let i = 0; i < piano.keys.length; i++){
+        //     piano.keys[i].render();
+        // }
     </script>
     <!-- <script src="main.js"></script> -->
 </body>
