@@ -15,7 +15,7 @@ class Key extends Entity {
         if(this.type == "white"){
             ctx.beginPath();
             ctx.fillStyle = this.type;
-            ctx.strokeStyle = "back";
+            ctx.strokeStyle = "black";
             ctx.fillStyle = "white";
             ctx.rect(this.x, this.y, this.width, this.height);
             ctx.stroke();
@@ -24,7 +24,7 @@ class Key extends Entity {
         } else {
             ctx.beginPath();
             ctx.fillStyle = "black";
-            ctx.strokeStyle = "back";
+            ctx.strokeStyle = "black";
             ctx.rect(this.x, this.y, this.width / 2, this.height * 0.6);
             ctx.stroke();
             ctx.fill();
@@ -57,6 +57,8 @@ class Piano extends Entity {
         let whiteKeys = [];
         let keys = [];
         let white = 0
+
+        //mục đích phần này là để tìm ra vị trí x của các phím dựa vào số lượng các phím trắng.
         for(let i = 0; i < keyNotes.length; i++){
             if(keyNotes[i].name.includes('s')) {
                 keyNotes[i].x = this.rightIndent + white * this.keyWidth - this.keyWidth / 4;
@@ -68,18 +70,11 @@ class Piano extends Entity {
                 keyNotes[i].x = this.rightIndent + white++ * this.keyWidth;
                 keyNotes[i].type = "white";
                 whiteKeys.push(keyNotes[i]);
-                // console.log(whiteKeys);
-                // keys.push(keyNotes[i]);
             }
         }
 
         console.log(whiteKeys);
         console.log(blackKeys);
-
-        //push phim den con lai vao keys
-        // for(let i = 0; i < blackKeys.length; i++){
-            // keys.push(blackKeys[i]);
-        // }
 
         //khoi tao obj key voi toa do x da duoc luu them owr vong lap ben tren
         for(let i = 0; i < keyNotes.length; i++){
